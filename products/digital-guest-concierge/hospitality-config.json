@@ -1,0 +1,25 @@
+{
+  "product": "Digital Guest Concierge",
+  "version": 1,
+  "defaultSections": [
+    {"key":"welcome","title":"Welcome","type":"content","purpose":"Property welcome, reception hours and emergency contact"},
+    {"key":"wifi","title":"Wi-Fi","type":"utility","purpose":"Network name and guest access instructions"},
+    {"key":"breakfast","title":"Breakfast","type":"service","purpose":"Hours, location, menu notes and optional paid extras"},
+    {"key":"checkin_checkout","title":"Check-in & Check-out","type":"content","purpose":"Arrival, access, luggage and departure information"},
+    {"key":"transfer","title":"Transfer","type":"upsell","purpose":"Airport/station transfer enquiry and pricing"},
+    {"key":"late_checkout","title":"Late Checkout","type":"upsell","purpose":"Availability request and paid supplement"},
+    {"key":"experiences","title":"Local Experiences","type":"upsell","purpose":"Tours, activities and partner offers"},
+    {"key":"food_drink","title":"Food & Drink","type":"service","purpose":"Recommended restaurants, room minibar or partner venues"},
+    {"key":"house_rules","title":"House Rules","type":"content","purpose":"Noise, smoking, visitors and property rules"},
+    {"key":"help","title":"Need Help?","type":"contact","purpose":"Reception, WhatsApp, email and emergency contacts"}
+  ],
+  "defaultLanguages": ["en","it"],
+  "qrContexts": ["property","room","reception","breakfast_area"],
+  "analytics": ["qr_scans","section_views","upsell_clicks","contact_clicks"],
+  "upsellExamples": [
+    {"name":"Airport Transfer","pricing":"property-defined"},
+    {"name":"Late Checkout","pricing":"property-defined"},
+    {"name":"Welcome Package","pricing":"property-defined"},
+    {"name":"Local Experience","pricing":"partner/property-defined"}
+  ]
+}
