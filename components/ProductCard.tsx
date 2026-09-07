@@ -2,7 +2,11 @@ import Link from "next/link";
 import { formatPrice, type Product } from "@/lib/products";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const isGuestInbox = product.id === "guest-inbox-pro";
+  const productPages: Record<string, string> = {
+    "guest-inbox-pro": "/guest-inbox-pro",
+    "repeat-guest-engine": "/repeat-guest-engine",
+  };
+  const productPage = productPages[product.id];
   const mailSubject = encodeURIComponent(`${product.title} setup`);
 
   return (
@@ -16,8 +20,8 @@ export default function ProductCard({ product }: { product: Product }) {
       <ul>
         {product.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
       </ul>
-      {isGuestInbox ? (
-        <Link className="buy-button" href="/guest-inbox-pro" style={{textAlign:"center",textDecoration:"none"}}>View product & demo</Link>
+      {productPage ? (
+        <Link className="buy-button" href={productPage} style={{textAlign:"center",textDecoration:"none"}}>View product & demo</Link>
       ) : (
         <a className="buy-button" href={`mailto:info@vincenzoproto.com?subject=${mailSubject}`} style={{textAlign:"center",textDecoration:"none"}}>Request setup</a>
       )}
