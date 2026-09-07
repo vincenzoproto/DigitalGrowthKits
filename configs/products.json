@@ -1,68 +1,68 @@
 [
   {
-    "id": "hospitality-ai-kit",
-    "slug": "hospitality-ai-kit",
-    "title": "Hospitality AI Kit",
-    "shortDescription": "AI prompts and workflows for faster hotel and B&B marketing, guest communication and sales.",
-    "priceCents": 2900,
+    "id": "low-season-revenue-system",
+    "slug": "low-season-revenue-system",
+    "title": "Low Season Revenue System",
+    "shortDescription": "A complete operating system for turning empty low-season dates into structured offers, campaigns and measurable bookings.",
+    "priceCents": 7900,
     "currency": "EUR",
     "badge": "Best starter",
-    "bullets": ["Marketing prompt library", "Guest communication workflows", "Offer and upsell prompts", "Ready-to-copy frameworks"],
-    "downloadEnvKey": "DOWNLOAD_HOSPITALITY_AI_KIT"
+    "bullets": ["Editable offer-margin calculator", "12 ready-to-adapt low-season offers", "90-day promotion calendar", "Revenue tracking dashboard"],
+    "downloadEnvKey": "DOWNLOAD_LOW_SEASON_REVENUE_SYSTEM"
   },
   {
-    "id": "airbnb-host-kit",
-    "slug": "airbnb-host-kit",
-    "title": "Airbnb Host Kit",
-    "shortDescription": "A practical operating pack for hosts who want clearer communication and more repeatable guest service.",
-    "priceCents": 3900,
+    "id": "direct-booking-conversion-kit",
+    "slug": "direct-booking-conversion-kit",
+    "title": "Direct Booking Conversion Kit",
+    "shortDescription": "Tools to convert more website and returning guests into direct enquiries and bookings without relying only on OTAs.",
+    "priceCents": 6900,
     "currency": "EUR",
-    "badge": "For hosts",
-    "bullets": ["Guest message templates", "Check-in and checkout flows", "Upsell ideas", "House-rule frameworks"],
-    "downloadEnvKey": "DOWNLOAD_AIRBNB_HOST_KIT"
+    "badge": "Direct revenue",
+    "bullets": ["Website conversion checklist", "Direct-booking offer builder", "Abandoned-enquiry follow-up sequence", "Repeat-guest campaign templates"],
+    "downloadEnvKey": "DOWNLOAD_DIRECT_BOOKING_CONVERSION_KIT"
   },
   {
-    "id": "instagram-templates",
-    "slug": "instagram-templates",
-    "title": "100 Instagram Templates",
-    "shortDescription": "A hospitality-focused content library for planning posts, Reels, stories and promotional campaigns.",
-    "priceCents": 1900,
-    "currency": "EUR",
-    "badge": "Quick win",
-    "bullets": ["100 content frameworks", "Reels and Stories ideas", "Seasonal promotion formats", "Hospitality-specific hooks"],
-    "downloadEnvKey": "DOWNLOAD_INSTAGRAM_TEMPLATES"
-  },
-  {
-    "id": "hotel-sales-email-pack",
-    "slug": "hotel-sales-email-pack",
-    "title": "Hotel Sales Email Pack",
-    "shortDescription": "Email sequences for prospecting, partnerships, follow-ups and low-season commercial outreach.",
-    "priceCents": 2900,
-    "currency": "EUR",
-    "badge": "Sales",
-    "bullets": ["Cold outreach sequences", "Follow-up templates", "Partnership messages", "Editable subject lines"],
-    "downloadEnvKey": "DOWNLOAD_HOTEL_SALES_EMAIL_PACK"
-  },
-  {
-    "id": "bnb-low-season-kit",
-    "slug": "bnb-low-season-kit",
-    "title": "B&B Low Season Kit",
-    "shortDescription": "Campaign frameworks designed to help independent accommodation businesses create stronger off-peak offers.",
+    "id": "guest-journey-upsell-system",
+    "slug": "guest-journey-upsell-system",
+    "title": "Guest Journey & Upsell System",
+    "shortDescription": "A ready-to-use guest communication and upsell workflow from booking confirmation through post-stay follow-up.",
     "priceCents": 5900,
     "currency": "EUR",
-    "badge": "Revenue",
-    "bullets": ["Low-season campaign planner", "Offer-building worksheet", "Content calendar", "Promotion checklists"],
-    "downloadEnvKey": "DOWNLOAD_BNB_LOW_SEASON_KIT"
+    "badge": "Operations",
+    "bullets": ["Pre-arrival and check-in message flows", "Upsell menu and pricing worksheet", "Late checkout / transfer / experience scripts", "Post-stay review and repeat-booking flow"],
+    "downloadEnvKey": "DOWNLOAD_GUEST_JOURNEY_UPSELL_SYSTEM"
   },
   {
-    "id": "complete-hospitality-bundle",
-    "slug": "complete-hospitality-bundle",
-    "title": "Complete Hospitality Bundle",
-    "shortDescription": "The full DigitalGrowthKits hospitality library bundled into one practical operating pack.",
-    "priceCents": 9900,
+    "id": "hotel-sales-outreach-system",
+    "slug": "hotel-sales-outreach-system",
+    "title": "Hotel Sales Outreach System",
+    "shortDescription": "A practical sales pipeline for partnerships, corporate accounts, groups and local business development.",
+    "priceCents": 5900,
+    "currency": "EUR",
+    "badge": "Sales",
+    "bullets": ["Prospect tracker and pipeline sheet", "Multi-step outreach sequences", "Follow-up cadence and call scripts", "Partnership proposal templates"],
+    "downloadEnvKey": "DOWNLOAD_HOTEL_SALES_OUTREACH_SYSTEM"
+  },
+  {
+    "id": "90-day-content-campaign-system",
+    "slug": "90-day-content-campaign-system",
+    "title": "90-Day Content & Campaign System",
+    "shortDescription": "A complete three-month content and promotional planning system built specifically for independent hospitality businesses.",
+    "priceCents": 4900,
+    "currency": "EUR",
+    "badge": "Marketing",
+    "bullets": ["90-day editable content calendar", "Campaign planning board", "Reel / Story / email frameworks", "Monthly performance tracker"],
+    "downloadEnvKey": "DOWNLOAD_90_DAY_CONTENT_CAMPAIGN_SYSTEM"
+  },
+  {
+    "id": "complete-hospitality-growth-os",
+    "slug": "complete-hospitality-growth-os",
+    "title": "Complete Hospitality Growth OS",
+    "shortDescription": "The full DigitalGrowthKits operating library for revenue, direct bookings, guest monetisation, sales and marketing.",
+    "priceCents": 17900,
     "currency": "EUR",
     "badge": "Best value",
-    "bullets": ["All core kits included", "Sales + marketing + operations", "Single download bundle", "Best-value package"],
-    "downloadEnvKey": "DOWNLOAD_COMPLETE_HOSPITALITY_BUNDLE"
+    "bullets": ["All five operating systems included", "Editable spreadsheets and dashboards", "Templates, SOPs and campaign assets", "One complete hospitality growth workspace"],
+    "downloadEnvKey": "DOWNLOAD_COMPLETE_HOSPITALITY_GROWTH_OS"
   }
 ]
