@@ -1,0 +1,68 @@
+[
+  {
+    "id": "hospitality-ai-kit",
+    "slug": "hospitality-ai-kit",
+    "title": "Hospitality AI Kit",
+    "shortDescription": "AI prompts and workflows for faster hotel and B&B marketing, guest communication and sales.",
+    "priceCents": 2900,
+    "currency": "EUR",
+    "badge": "Best starter",
+    "bullets": ["Marketing prompt library", "Guest communication workflows", "Offer and upsell prompts", "Ready-to-copy frameworks"],
+    "downloadEnvKey": "DOWNLOAD_HOSPITALITY_AI_KIT"
+  },
+  {
+    "id": "airbnb-host-kit",
+    "slug": "airbnb-host-kit",
+    "title": "Airbnb Host Kit",
+    "shortDescription": "A practical operating pack for hosts who want clearer communication and more repeatable guest service.",
+    "priceCents": 3900,
+    "currency": "EUR",
+    "badge": "For hosts",
+    "bullets": ["Guest message templates", "Check-in and checkout flows", "Upsell ideas", "House-rule frameworks"],
+    "downloadEnvKey": "DOWNLOAD_AIRBNB_HOST_KIT"
+  },
+  {
+    "id": "instagram-templates",
+    "slug": "instagram-templates",
+    "title": "100 Instagram Templates",
+    "shortDescription": "A hospitality-focused content library for planning posts, Reels, stories and promotional campaigns.",
+    "priceCents": 1900,
+    "currency": "EUR",
+    "badge": "Quick win",
+    "bullets": ["100 content frameworks", "Reels and Stories ideas", "Seasonal promotion formats", "Hospitality-specific hooks"],
+    "downloadEnvKey": "DOWNLOAD_INSTAGRAM_TEMPLATES"
+  },
+  {
+    "id": "hotel-sales-email-pack",
+    "slug": "hotel-sales-email-pack",
+    "title": "Hotel Sales Email Pack",
+    "shortDescription": "Email sequences for prospecting, partnerships, follow-ups and low-season commercial outreach.",
+    "priceCents": 2900,
+    "currency": "EUR",
+    "badge": "Sales",
+    "bullets": ["Cold outreach sequences", "Follow-up templates", "Partnership messages", "Editable subject lines"],
+    "downloadEnvKey": "DOWNLOAD_HOTEL_SALES_EMAIL_PACK"
+  },
+  {
+    "id": "bnb-low-season-kit",
+    "slug": "bnb-low-season-kit",
+    "title": "B&B Low Season Kit",
+    "shortDescription": "Campaign frameworks designed to help independent accommodation businesses create stronger off-peak offers.",
+    "priceCents": 5900,
+    "currency": "EUR",
+    "badge": "Revenue",
+    "bullets": ["Low-season campaign planner", "Offer-building worksheet", "Content calendar", "Promotion checklists"],
+    "downloadEnvKey": "DOWNLOAD_BNB_LOW_SEASON_KIT"
+  },
+  {
+    "id": "complete-hospitality-bundle",
+    "slug": "complete-hospitality-bundle",
+    "title": "Complete Hospitality Bundle",
+    "shortDescription": "The full DigitalGrowthKits hospitality library bundled into one practical operating pack.",
+    "priceCents": 9900,
+    "currency": "EUR",
+    "badge": "Best value",
+    "bullets": ["All core kits included", "Sales + marketing + operations", "Single download bundle", "Best-value package"],
+    "downloadEnvKey": "DOWNLOAD_COMPLETE_HOSPITALITY_BUNDLE"
+  }
+]
