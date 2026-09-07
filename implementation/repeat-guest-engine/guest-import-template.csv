@@ -1,0 +1,3 @@
+email,first_name,last_name,language,country,last_stay_date,total_stays,last_booking_value,stay_season,marketing_eligible,marketing_source,unsubscribed
+anna.demo@example.com,Anna,Demo,it,IT,2026-02-14,3,420.00,low,true,property_confirmed,false
+marco.demo@example.com,Marco,Demo,en,GB,2025-08-22,1,260.00,high,false,unknown,false
