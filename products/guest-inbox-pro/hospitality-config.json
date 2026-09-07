@@ -1,0 +1,33 @@
+{
+  "product": "Guest Inbox Pro",
+  "version": 1,
+  "labels": [
+    {"name": "Booking Lead", "purpose": "New stay or availability enquiry"},
+    {"name": "Check-in", "purpose": "Arrival time, access, luggage and check-in questions"},
+    {"name": "Transfer", "purpose": "Airport/station transfer request"},
+    {"name": "Upsell", "purpose": "Late checkout, breakfast, experience or paid add-on"},
+    {"name": "Guest Issue", "purpose": "Problem requiring operational follow-up"},
+    {"name": "Post-stay", "purpose": "Review request or repeat-booking follow-up"},
+    {"name": "VIP", "purpose": "Priority guest or high-value request"}
+  ],
+  "teams": [
+    {"name": "Reservations", "handles": ["Booking Lead"]},
+    {"name": "Reception", "handles": ["Check-in", "Transfer", "Upsell", "Guest Issue", "VIP"]},
+    {"name": "Marketing", "handles": ["Post-stay"]}
+  ],
+  "cannedResponses": [
+    {"key": "late_checkin", "title": "Late check-in", "text": "Late check-in is available. Please send us your expected arrival time and we will confirm the access instructions."},
+    {"key": "transfer_request", "title": "Transfer request", "text": "We can help arrange a transfer. Please send your arrival location, time, number of guests and luggage details."},
+    {"key": "direct_booking", "title": "Direct booking enquiry", "text": "Thank you for your enquiry. Please send your preferred dates and number of guests and we will confirm the best available direct option."},
+    {"key": "late_checkout", "title": "Late checkout", "text": "Late checkout may be available subject to occupancy. We will confirm availability and any applicable supplement."},
+    {"key": "review_request", "title": "Post-stay review", "text": "Thank you for staying with us. We hope you enjoyed your visit. If you have a moment, we would really appreciate your feedback."}
+  ],
+  "routingRules": [
+    {"when": "new booking or availability enquiry", "label": "Booking Lead", "assign": "Reservations"},
+    {"when": "arrival, access or check-in question", "label": "Check-in", "assign": "Reception"},
+    {"when": "transfer request", "label": "Transfer", "assign": "Reception"},
+    {"when": "paid add-on request", "label": "Upsell", "assign": "Reception"},
+    {"when": "complaint or operational problem", "label": "Guest Issue", "assign": "Reception"},
+    {"when": "post-stay follow-up", "label": "Post-stay", "assign": "Marketing"}
+  ]
+}
