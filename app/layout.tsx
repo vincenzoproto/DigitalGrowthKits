@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DigitalGrowthKits | Ready-to-use hospitality growth tools",
-  description: "Practical digital kits for hotels, B&Bs, hosts and hospitality operators.",
+  title: "DigitalGrowthKits | Hospitality systems installed for you",
+  description: "Configured guest messaging, concierge, retention and direct-booking systems for hotels and B&Bs.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -13,12 +13,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <Link href="/" className="brand"><span className="brand-mark">DGK</span><span>DigitalGrowthKits</span></Link>
-          <nav><a href="/#products">Kits</a><a href="mailto:info@vincenzoproto.com">Support</a></nav>
+          <nav><a href="/#products">Systems</a><a href="mailto:info@vincenzoproto.com">Contact</a></nav>
         </header>
         {children}
         <footer>
-          <div><strong>DigitalGrowthKits</strong><p>Practical digital tools for hospitality growth.</p></div>
-          <div className="footer-meta"><span>© 2026 DigitalGrowthKits</span><a href="https://github.com/tishonator/TishCommerce" target="_blank" rel="noreferrer">Powered in part by the TishCommerce approach</a></div>
+          <div><strong>DigitalGrowthKits</strong><p>Configured hospitality systems built on proven software foundations.</p></div>
+          <div className="footer-meta"><span>© 2026 DigitalGrowthKits</span><span>Open-source foundations are credited per their applicable licenses.</span></div>
         </footer>
       </body>
     </html>
