@@ -25,11 +25,11 @@
     "id": "repeat-guest-engine",
     "slug": "repeat-guest-engine",
     "title": "Repeat Guest Engine",
-    "shortDescription": "A self-hosted hotel marketing automation system designed to reactivate past guests and run segmented direct-booking campaigns.",
+    "shortDescription": "A managed guest-database reactivation system that turns eligible past guests into segmented direct-booking campaigns.",
     "priceCents": 99000,
     "currency": "EUR",
     "badge": "Retention",
-    "bullets": ["Marketing automation architecture based on Mautic", "Guest database segmentation and campaign workflows", "Post-stay, win-back and low-season automations", "Initial campaign setup and operating dashboard"],
+    "bullets": ["CSV / PMS-export database mapping and import", "Marketing-eligible guest segmentation", "Post-stay, win-back and low-season automations", "Dashboard, preference management and staff handover"],
     "downloadEnvKey": "ONBOARDING_REPEAT_GUEST_ENGINE"
   },
   {
