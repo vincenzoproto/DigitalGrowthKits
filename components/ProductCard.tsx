@@ -7,7 +7,7 @@ export default function ProductCard({ product }: { product: Product }) {
     "repeat-guest-engine": "/repeat-guest-engine",
   };
   const productPage = productPages[product.id];
-  const mailSubject = encodeURIComponent(`${product.title} setup`);
+  const setupHref = `/request-setup?product=${encodeURIComponent(product.slug)}`;
 
   return (
     <article className="product-card">
@@ -20,11 +20,12 @@ export default function ProductCard({ product }: { product: Product }) {
       <ul>
         {product.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
       </ul>
-      {productPage ? (
-        <Link className="buy-button" href={productPage} style={{textAlign:"center",textDecoration:"none"}}>View product & demo</Link>
-      ) : (
-        <a className="buy-button" href={`mailto:info@vincenzoproto.com?subject=${mailSubject}`} style={{textAlign:"center",textDecoration:"none"}}>Request setup</a>
-      )}
+      <div style={{display:"grid",gap:10}}>
+        {productPage ? (
+          <Link className="buy-button" href={productPage} style={{textAlign:"center",textDecoration:"none"}}>View product & demo</Link>
+        ) : null}
+        <Link className="buy-button" href={setupHref} style={{textAlign:"center",textDecoration:"none",background:productPage?"#334136":undefined}}>Request setup</Link>
+      </div>
     </article>
   );
 }
