@@ -1,68 +1,46 @@
 [
   {
-    "id": "low-season-revenue-system",
-    "slug": "low-season-revenue-system",
-    "title": "Low Season Revenue System",
-    "shortDescription": "A complete operating system for turning empty low-season dates into structured offers, campaigns and measurable bookings.",
-    "priceCents": 7900,
+    "id": "guest-inbox-pro",
+    "slug": "guest-inbox-pro",
+    "title": "Guest Inbox Pro",
+    "shortDescription": "A professionally configured unified guest inbox for hotels and B&Bs, bringing customer conversations into one operating dashboard.",
+    "priceCents": 69000,
     "currency": "EUR",
     "badge": "Best starter",
-    "bullets": ["Editable offer-margin calculator", "12 ready-to-adapt low-season offers", "90-day promotion calendar", "Revenue tracking dashboard"],
-    "downloadEnvKey": "DOWNLOAD_LOW_SEASON_REVENUE_SYSTEM"
+    "bullets": ["Unified inbox architecture based on Chatwoot core", "Website chat, email and supported social channels", "Hotel-specific labels, routing and response workflows", "Installation, configuration and staff handover"],
+    "downloadEnvKey": "ONBOARDING_GUEST_INBOX_PRO"
   },
   {
-    "id": "direct-booking-conversion-kit",
-    "slug": "direct-booking-conversion-kit",
-    "title": "Direct Booking Conversion Kit",
-    "shortDescription": "Tools to convert more website and returning guests into direct enquiries and bookings without relying only on OTAs.",
-    "priceCents": 6900,
+    "id": "digital-guest-concierge",
+    "slug": "digital-guest-concierge",
+    "title": "Digital Guest Concierge",
+    "shortDescription": "A branded mobile guest portal accessed by QR code for property information, services, upsells and multilingual guest content.",
+    "priceCents": 49000,
     "currency": "EUR",
-    "badge": "Direct revenue",
-    "bullets": ["Website conversion checklist", "Direct-booking offer builder", "Abandoned-enquiry follow-up sequence", "Repeat-guest campaign templates"],
-    "downloadEnvKey": "DOWNLOAD_DIRECT_BOOKING_CONVERSION_KIT"
+    "badge": "Guest experience",
+    "bullets": ["QR guest portal architecture inspired by AtlasQR", "Property guide, services, breakfast, transfers and upsells", "Multilingual mobile-first guest pages", "Dynamic content that can be updated without reprinting QR codes"],
+    "downloadEnvKey": "ONBOARDING_DIGITAL_GUEST_CONCIERGE"
   },
   {
-    "id": "guest-journey-upsell-system",
-    "slug": "guest-journey-upsell-system",
-    "title": "Guest Journey & Upsell System",
-    "shortDescription": "A ready-to-use guest communication and upsell workflow from booking confirmation through post-stay follow-up.",
-    "priceCents": 5900,
+    "id": "repeat-guest-engine",
+    "slug": "repeat-guest-engine",
+    "title": "Repeat Guest Engine",
+    "shortDescription": "A self-hosted hotel marketing automation system designed to reactivate past guests and run segmented direct-booking campaigns.",
+    "priceCents": 99000,
     "currency": "EUR",
-    "badge": "Operations",
-    "bullets": ["Pre-arrival and check-in message flows", "Upsell menu and pricing worksheet", "Late checkout / transfer / experience scripts", "Post-stay review and repeat-booking flow"],
-    "downloadEnvKey": "DOWNLOAD_GUEST_JOURNEY_UPSELL_SYSTEM"
+    "badge": "Retention",
+    "bullets": ["Marketing automation architecture based on Mautic", "Guest database segmentation and campaign workflows", "Post-stay, win-back and low-season automations", "Initial campaign setup and operating dashboard"],
+    "downloadEnvKey": "ONBOARDING_REPEAT_GUEST_ENGINE"
   },
   {
-    "id": "hotel-sales-outreach-system",
-    "slug": "hotel-sales-outreach-system",
-    "title": "Hotel Sales Outreach System",
-    "shortDescription": "A practical sales pipeline for partnerships, corporate accounts, groups and local business development.",
-    "priceCents": 5900,
+    "id": "direct-booking-engine",
+    "slug": "direct-booking-engine",
+    "title": "Direct Booking Engine",
+    "shortDescription": "A configured direct-booking website and reservation system for independent accommodation businesses that want more control over direct sales.",
+    "priceCents": 149000,
     "currency": "EUR",
-    "badge": "Sales",
-    "bullets": ["Prospect tracker and pipeline sheet", "Multi-step outreach sequences", "Follow-up cadence and call scripts", "Partnership proposal templates"],
-    "downloadEnvKey": "DOWNLOAD_HOTEL_SALES_OUTREACH_SYSTEM"
-  },
-  {
-    "id": "90-day-content-campaign-system",
-    "slug": "90-day-content-campaign-system",
-    "title": "90-Day Content & Campaign System",
-    "shortDescription": "A complete three-month content and promotional planning system built specifically for independent hospitality businesses.",
-    "priceCents": 4900,
-    "currency": "EUR",
-    "badge": "Marketing",
-    "bullets": ["90-day editable content calendar", "Campaign planning board", "Reel / Story / email frameworks", "Monthly performance tracker"],
-    "downloadEnvKey": "DOWNLOAD_90_DAY_CONTENT_CAMPAIGN_SYSTEM"
-  },
-  {
-    "id": "complete-hospitality-growth-os",
-    "slug": "complete-hospitality-growth-os",
-    "title": "Complete Hospitality Growth OS",
-    "shortDescription": "The full DigitalGrowthKits operating library for revenue, direct bookings, guest monetisation, sales and marketing.",
-    "priceCents": 17900,
-    "currency": "EUR",
-    "badge": "Best value",
-    "bullets": ["All five operating systems included", "Editable spreadsheets and dashboards", "Templates, SOPs and campaign assets", "One complete hospitality growth workspace"],
-    "downloadEnvKey": "DOWNLOAD_COMPLETE_HOSPITALITY_GROWTH_OS"
+    "badge": "High value",
+    "bullets": ["Hotel website and booking architecture based on QloApps core", "Room inventory and direct reservation workflow", "Property configuration and booking-engine setup", "Launch configuration and owner handover"],
+    "downloadEnvKey": "ONBOARDING_DIRECT_BOOKING_ENGINE"
   }
 ]
