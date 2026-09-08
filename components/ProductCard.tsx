@@ -4,7 +4,9 @@ import { formatPrice, type Product } from "@/lib/products";
 export default function ProductCard({ product }: { product: Product }) {
   const productPages: Record<string, string> = {
     "guest-inbox-pro": "/guest-inbox-pro",
+    "digital-guest-concierge": "/digital-guest-concierge",
     "repeat-guest-engine": "/repeat-guest-engine",
+    "direct-booking-engine": "/direct-booking-engine",
   };
   const productPage = productPages[product.id];
   const setupHref = `/request-setup?product=${encodeURIComponent(product.slug)}`;
@@ -20,11 +22,9 @@ export default function ProductCard({ product }: { product: Product }) {
       <ul>
         {product.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
       </ul>
-      <div style={{display:"grid",gap:10}}>
-        {productPage ? (
-          <Link className="buy-button" href={productPage} style={{textAlign:"center",textDecoration:"none"}}>View product & demo</Link>
-        ) : null}
-        <Link className="buy-button" href={setupHref} style={{textAlign:"center",textDecoration:"none",background:productPage?"#334136":undefined}}>Request setup</Link>
+      <div className="card-actions">
+        <Link className="buy-button button-link" href={productPage}>See offer & scope</Link>
+        <Link className="buy-button button-link secondary-button" href={setupHref}>Request setup</Link>
       </div>
     </article>
   );
