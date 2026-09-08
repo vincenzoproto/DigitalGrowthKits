@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 
 type SetupRequest = {
   product?: string;
+  referral?: string;
   propertyName?: string;
   propertyType?: string;
   contactName?: string;
@@ -23,6 +24,7 @@ function clean(value: unknown, max = 500) {
 function formatText(data: Required<Omit<SetupRequest, "companyWebsite">>) {
   return [
     `System: ${data.product}`,
+    `Referral: ${data.referral || "direct"}`,
     `Property: ${data.propertyName}`,
     `Property type: ${data.propertyType}`,
     `Rooms / units: ${data.rooms || "-"}`,
@@ -40,14 +42,11 @@ function formatText(data: Required<Omit<SetupRequest, "companyWebsite">>) {
 export async function POST(request: NextRequest) {
   try {
     const raw = (await request.json()) as SetupRequest;
-
-    // Honeypot: return success to bots without delivering anything.
-    if (clean(raw.companyWebsite, 100)) {
-      return NextResponse.json({ ok: true });
-    }
+    if (clean(raw.companyWebsite, 100)) return NextResponse.json({ ok: true });
 
     const data = {
       product: clean(raw.product, 120),
+      referral: clean(raw.referral, 40),
       propertyName: clean(raw.propertyName, 180),
       propertyType: clean(raw.propertyType, 80),
       contactName: clean(raw.contactName, 140),
@@ -59,29 +58,16 @@ export async function POST(request: NextRequest) {
       notes: clean(raw.notes, 2500),
     };
 
-    if (!data.product || !data.propertyName || !data.contactName || !data.email) {
-      return NextResponse.json({ ok: false, code: "MISSING_FIELDS" }, { status: 400 });
-    }
+    if (!data.product || !data.propertyName || !data.contactName || !data.email) return NextResponse.json({ ok: false, code: "MISSING_FIELDS" }, { status: 400 });
+    if (!/^\S+@\S+\.\S+$/.test(data.email)) return NextResponse.json({ ok: false, code: "INVALID_EMAIL" }, { status: 400 });
 
-    if (!/^\S+@\S+\.\S+$/.test(data.email)) {
-      return NextResponse.json({ ok: false, code: "INVALID_EMAIL" }, { status: 400 });
-    }
-
-    const subject = `GuestFlow Systems - ${data.product} setup request`;
+    const subject = `GuestFlow Systems - ${data.product} setup request${data.referral ? ` [${data.referral}]` : ""}`;
     const text = formatText(data);
     const webhook = process.env.SETUP_REQUEST_WEBHOOK_URL;
 
     if (webhook) {
-      const webhookResponse = await fetch(webhook, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }),
-        cache: "no-store",
-      });
-
-      if (webhookResponse.ok) {
-        return NextResponse.json({ ok: true, channel: "webhook" });
-      }
+      const webhookResponse = await fetch(webhook, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }), cache: "no-store" });
+      if (webhookResponse.ok) return NextResponse.json({ ok: true, channel: "webhook" });
     }
 
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -89,26 +75,8 @@ export async function POST(request: NextRequest) {
     const recipient = process.env.SETUP_REQUEST_TO || "info@vincenzoproto.com";
 
     if (resendApiKey && resendFrom) {
-      const resendResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: resendFrom,
-          to: [recipient],
-          reply_to: data.email,
-          subject,
-          text,
-        }),
-        cache: "no-store",
-      });
-
-      if (resendResponse.ok) {
-        return NextResponse.json({ ok: true, channel: "email" });
-      }
-
+      const resendResponse = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: resendFrom, to: [recipient], reply_to: data.email, subject, text }), cache: "no-store" });
+      if (resendResponse.ok) return NextResponse.json({ ok: true, channel: "email" });
       return NextResponse.json({ ok: false, code: "DELIVERY_FAILED" }, { status: 502 });
     }
 
