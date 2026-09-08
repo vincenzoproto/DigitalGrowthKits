@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./guest-inbox.module.css";
+
+export const metadata: Metadata = {
+  title: "Guest Inbox Pro",
+  description: "A configured unified guest inbox for independent hotels and B&Bs, with hospitality-specific labels, routing and response workflows.",
+  alternates: { canonical: "/guest-inbox-pro" },
+};
 
 export default function GuestInboxProPage() {
   return (
