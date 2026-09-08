@@ -4,14 +4,14 @@ import styles from "./guest-inbox.module.css";
 export default function GuestInboxProPage() {
   return (
     <main className={styles.shell}>
-      <Link className={styles.back} href="/">← Back to DigitalGrowthKits</Link>
+      <Link className={styles.back} href="/">← Back to GuestFlow Systems</Link>
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <span className={styles.eyebrow}>Hospitality messaging infrastructure</span>
           <h1>Every guest message.<br/>One operating inbox.</h1>
           <p className={styles.lead}>Guest Inbox Pro is a professionally configured unified inbox for hotels and B&Bs. It centralises supported guest channels, adds hospitality-specific labels and routing, and gives staff one place to handle enquiries, check-in questions, requests and booking leads.</p>
           <div className={styles.actions}>
-            <a className={styles.primary} href="mailto:info@vincenzoproto.com?subject=Guest%20Inbox%20Pro%20Setup">Request setup</a>
+            <Link className={styles.primary} href="/request-setup?product=guest-inbox-pro">Request setup</Link>
             <Link className={styles.secondary} href="/guest-inbox-pro/demo">Open live demo</Link>
           </div>
         </div>
@@ -63,6 +63,7 @@ export default function GuestInboxProPage() {
           <div className={styles.mini}><strong>Workflow maintenance</strong><span className={styles.muted}>Small edits to labels, canned responses, routing and hospitality workflows as operations change.</span></div>
           <div className={styles.mini}><strong>Operational support</strong><span className={styles.muted}>Help for the hotel team when channels, users or inbox rules need adjustment.</span></div>
         </div>
+        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=guest-inbox-pro">Request a setup review</Link></div>
         <p className={styles.legal}>Guest Inbox Pro is an implementation and managed-service offer built around the open-source Chatwoot core. Enterprise-only features are not included. Third-party channel providers may impose their own eligibility, API or messaging fees.</p>
       </section>
     </main>
