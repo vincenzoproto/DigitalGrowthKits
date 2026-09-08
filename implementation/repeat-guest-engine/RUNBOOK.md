@@ -1,8 +1,12 @@
 # Repeat Guest Engine — Delivery Runbook
 
 ## Offer
-- Setup: €990
+- Founder setup: €690 one-time for the first 3 completed purchases
+- Standard setup after founder slots: €990 one-time
 - Optional managed service: €129/month
+- One property and one approved guest-data source per standard setup
+
+Before payment, confirm feasibility against `FOUNDER-SCOPE.md`. Do not mark a deal Closed-won until successful payment is verified.
 
 ## Customer inputs
 - property name and sending domain
@@ -29,7 +33,7 @@
 - create custom fields needed for hospitality segmentation
 - import a small test subset first
 - verify marketing eligibility and suppression status
-- import remaining approved contacts
+- import remaining approved contacts only after the test passes
 
 ### 4. Segments
 - Marketing Eligible
@@ -48,10 +52,12 @@
 Every promotional flow uses eligible contacts only and includes preference/unsubscribe controls.
 
 ### 6. QA
+- use `QA-TEST-PLAN.md`
 - seed test contacts controlled by the property/team
 - test links, language branches, delays, suppression and unsubscribe
 - verify sender domain/email transport
 - test reporting
+- keep production sends OFF until the property approves the audience, sender, content, timing and booking destination
 
 ### 7. Handover
 - admin/staff accounts
@@ -60,6 +66,9 @@ Every promotional flow uses eligible contacts only and includes preference/unsub
 - data/privacy checklist
 - backup and system-owner responsibilities
 - 30-minute operating handover
+
+## Delivery target
+Target 5 business days from receipt of required inputs/access, subject to external DNS/platform dependencies. This is a target rather than a guaranteed SLA.
 
 ## Managed service (€129/month)
 Includes reasonable campaign adjustments, segment tuning, monitoring and support. Email/SMS provider charges, VPS/hosting and third-party API costs are billed separately or paid directly by the customer.
