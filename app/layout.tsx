@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   applicationName: "GuestFlow Systems",
   title: {
     default: "GuestFlow Systems | Hospitality growth systems, configured for you",
-    template: "%s | GuestFlow Systems",
+    template: "%s",
   },
   description: "Done-for-you guest messaging, repeat-guest, digital concierge and direct-booking systems for independent hotels, B&Bs and guest houses.",
   alternates: { canonical: "/" },
