@@ -3,7 +3,17 @@
 Date: 2026-09-08
 Offer: Founder implementation €690 (standard €990)
 CTA: 15-minute setup review
-Status baseline: Sent
+Status baseline: Sent — delivery and readership not confirmed
+
+## Verification — 2026-09-08
+
+- Gmail review found 50 intended prospect recipients: 3 individual sends and 47 recipients across 4 Bcc batches (12 + 12 + 12 + 11). These are not 50 individual emails.
+- The 3 individual sends were addressed to prospects 1–3. The Bcc batches covered prospects 4–15, 16–27, 28–39 and 40–50 respectively.
+- Campaign-specific searches found no commercial replies at the time of this review. This is a point-in-time check, not background monitoring.
+- One delivery notification relates to prospect 38, Etnea Boutique Hotel: the hotel's downstream forwarding destination reported mailbox full. Delivery/readership at the original hotel mailbox is not established by this notification. Do not classify the hotel address as invalid or the prospect as a refusal.
+- No new outreach, corrective messages or follow-ups were sent during this review. Further outbound activity is on hold pending explicit user approval.
+- Preserve the original sender identity for each conversation. Future approved outreach must use individual recipients, not grouped Bcc batches.
+- No absence of a bounce should be treated as proof of inbox delivery or opening.
 
 ## Prospects contacted
 
@@ -44,7 +54,7 @@ Status baseline: Sent
 35. Le Boutique Hotel Roma — info@hotelleboutique.com — Sent
 36. Hotel Anahì Roma — info@hotelanahi.com — Sent
 37. Clerici Boutique Hotel Milano — info@clericiboutiquehotel.it — Sent
-38. Etnea Boutique Hotel Catania — info@etneaboutiquehotel.com — Sent
+38. Etnea Boutique Hotel Catania — info@etneaboutiquehotel.com — Delivery issue: downstream forwarding mailbox full; original mailbox delivery unconfirmed; follow-up on hold
 39. Convento Boutique Hotel — info@conventoboutiquehotel.com — Sent
 40. MyVenice Boutique Hotel — info@myvenicehotel.eu — Sent
 41. I Bastioni San Domenico Gallipoli — info@ibastionisandomenico.com — Sent
@@ -60,8 +70,12 @@ Status baseline: Sent
 
 ## Follow-up logic
 
-- Positive reply: qualify PMS/database size/marketing consent/direct booking goal and book 15-minute review.
-- Interested but not now: follow up in 7 days.
-- No reply: first follow-up after 4 business days, second follow-up after 8–10 business days.
-- Closed-won: send Stripe live checkout and move to onboarding.
+Outbound follow-ups below are proposed timing only, not scheduled or authorized sends. The current hold takes precedence.
+
+- Positive reply: qualify PMS/database size/marketing eligibility/direct booking goal and propose a 15-minute review. Preserve original sender and update this CRM with the interaction.
+- Interested but not now: propose follow-up in 7 days, subject to the recipient's preference and user approval.
+- No reply: proposed first follow-up after 4 business days, second after 8–10 business days; do not send while on hold or to opted-out contacts.
+- Delivery issue: hold follow-up and verify the existing business contact route before any approved retry; do not use private forwarding destinations discovered in diagnostic headers.
+- Qualified and scope agreed: checkout may be sent only after feasibility and deliverables are confirmed and the user authorizes the message. Mark Payment pending, not Closed-won.
+- Closed-won: mark only after successful payment is verified, then proceed to onboarding.
 - Founder offer capacity: 3 implementations at €690; standard price resumes at €990 afterward.
