@@ -35,6 +35,26 @@ export default function Home() {
         <span>INDEPENDENT HOTELS</span><span>B&amp;BS</span><span>GUEST HOUSES</span><span>APARTHOTELS</span><span>SMALL GROUPS</span>
       </section>
 
+      <section className="conversion-picker" aria-labelledby="choose-system">
+        <div className="conversion-picker-head">
+          <span className="eyebrow">Start with the bottleneck</span>
+          <h2 id="choose-system">What would you most like to improve?</h2>
+          <p>Choose the outcome closest to your current problem. Each path opens one clearly scoped system instead of a generic software bundle.</p>
+        </div>
+        <div className="system-picker-grid">
+          <Link className="system-choice" href="/guest-inbox-pro"><small>Guest operations</small><strong>Reduce repetitive guest messaging</strong><span>Guest Inbox Pro →</span></Link>
+          <Link className="system-choice" href="/repeat-guest-engine"><small>Retention</small><strong>Generate more repeat bookings</strong><span>Repeat Guest Engine →</span></Link>
+          <Link className="system-choice" href="/digital-guest-concierge"><small>Guest experience</small><strong>Make stay information easier to access</strong><span>Digital Guest Concierge →</span></Link>
+          <Link className="system-choice" href="/direct-booking-engine"><small>Direct revenue</small><strong>Build a clearer direct booking path</strong><span>Direct Booking Engine →</span></Link>
+        </div>
+      </section>
+
+      <section className="trust-ribbon" aria-label="GuestFlow implementation principles">
+        <div><b>Scope before access</b><span>No passwords or guest-level data are needed for the first review.</span></div>
+        <div><b>Works around your current stack</b><span>We review the PMS, booking and messaging tools you already use first.</span></div>
+        <div><b>Defined handover</b><span>Launch scope, ownership and optional support are clarified before go-live.</span></div>
+      </section>
+
       <section className="value-section">
         <div className="section-heading compact-heading"><span className="eyebrow">Why GuestFlow</span><h2>We sell the implementation, not the software headache.</h2></div>
         <div className="value-grid">
