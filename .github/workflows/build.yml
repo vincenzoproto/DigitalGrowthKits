@@ -17,6 +17,10 @@ jobs:
         with:
           node-version: 22
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+      - name: Test attribution and payment confirmation
+        run: npm test
       - name: Build
         run: npm run build
+      - name: Test production routes and setup delivery
+        run: npm run test:smoke

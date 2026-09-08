@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { normalizeReferral, resolveReferral } from "@/lib/referrals";
 
 const systems = ["Guest Inbox Pro", "Digital Guest Concierge", "Repeat Guest Engine", "Direct Booking Engine"];
 const goals = [
@@ -17,7 +18,8 @@ type Status = { type: "success" | "fallback" | "error"; message: string } | null
 export default function RequestSetupForm() {
   const searchParams = useSearchParams();
   const requested = searchParams.get("product") || "Repeat Guest Engine";
-  const referral = (searchParams.get("ref") || "").slice(0,40);
+  const referral = normalizeReferral(searchParams.get("ref"));
+  const [savedReferral, setSavedReferral] = useState<string>();
   const defaultProduct = useMemo(() => systems.find((name) => name.toLowerCase().replaceAll(" ", "-") === requested) || systems.find((name) => name === requested) || "Repeat Guest Engine", [requested]);
   const defaultGoal = goals.find(([, , system]) => system === defaultProduct)?.[0] || "repeat";
 
@@ -43,13 +45,13 @@ export default function RequestSetupForm() {
     if (selected) setProduct(selected[2]);
   }
 
-  function buildRequest() {
+  function buildRequest(requestReferral = resolveReferral(referral, savedReferral)) {
     const goalLabel = goals.find(([id]) => id === goal)?.[1] || goal;
     const subject = `GuestFlow Systems - ${product} setup review`;
     const body = [
       `System: ${product}`,
       `Primary goal: ${goalLabel}`,
-      `Referral: ${referral || "direct"}`,
+      `Referral: ${requestReferral || "direct"}`,
       `Property: ${propertyName || "-"}`,
       `Property type: ${propertyType || "-"}`,
       `Rooms / units: ${rooms || "-"}`,
@@ -65,8 +67,8 @@ export default function RequestSetupForm() {
     return { subject, body, goalLabel };
   }
 
-  function openEmailFallback() {
-    const { subject, body } = buildRequest();
+  function openEmailFallback(requestReferral = resolveReferral(referral, savedReferral)) {
+    const { subject, body } = buildRequest(requestReferral);
     window.location.href = `mailto:info@vincenzoproto.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
@@ -83,16 +85,20 @@ export default function RequestSetupForm() {
         body: JSON.stringify({ product, goal: goalLabel, referral, propertyName, propertyType, contactName, email, website, rooms, currentStack, databaseSize, notes, companyWebsite }),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => ({}));
+      const deliveredReferral = resolveReferral(result.referral, referral, savedReferral);
+      setSavedReferral(deliveredReferral);
+
+      if (response.ok && result.ok === true) {
         setStatus({ type: "success", message: "Request received. We’ll review the property, current stack and requested outcome before proposing the implementation scope." });
         return;
       }
 
-      setStatus({ type: "fallback", message: "Direct delivery is not available yet, so we’re opening a prepared email instead. Nothing you entered is lost." });
-      window.setTimeout(openEmailFallback, 350);
+      setStatus({ type: "fallback", message: "Your request has not been sent. We’re opening a prepared email: press Send in your email app to complete it." });
+      window.setTimeout(() => openEmailFallback(deliveredReferral), 350);
     } catch {
-      setStatus({ type: "fallback", message: "We couldn’t complete direct delivery, so we’re opening a prepared email with the same request." });
-      window.setTimeout(openEmailFallback, 350);
+      setStatus({ type: "fallback", message: "We couldn’t confirm delivery. We’re opening a prepared email: press Send in your email app to complete the request." });
+      window.setTimeout(() => openEmailFallback(), 350);
     } finally {
       setSending(false);
     }

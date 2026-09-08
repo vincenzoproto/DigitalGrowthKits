@@ -55,7 +55,7 @@ export default function RepeatGuestDemo() {
 
         <section style={{marginTop:34,border:'1px solid #dcd9cf',borderRadius:18,padding:26,background:'#fffef9'}}>
           <span className={styles.eyebrow}>Founder launch · first 3 completed purchases</span><h3 style={{fontSize:32,margin:'10px 0'}}>€690 one-time setup</h3><p style={{color:'#62685f'}}>Includes one-property database mapping, segmentation, three core automations, reporting view and staff handover. Optional managed service remains separate. Founder pricing is limited by the live checkout to three completed purchases.</p>
-          <div className={styles.actions} style={{marginTop:22}}><a className={styles.primary} href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">Secure a Founder slot</a><Link className={styles.secondary} href="/request-setup?product=repeat-guest-engine">Request a review first</Link></div>
+          <div className={styles.actions} style={{marginTop:22}}><a className={styles.primary} href="/buy/repeat-guest-engine-founder">Secure a Founder slot</a><Link className={styles.secondary} href="/request-setup?product=repeat-guest-engine">Request a review first</Link></div>
         </section>
       </section>
     </main>
