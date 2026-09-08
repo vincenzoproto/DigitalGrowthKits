@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./repeat-guest.module.css";
+
+export const metadata: Metadata = {
+  title: "Repeat Guest Engine",
+  description: "A configured repeat-booking system that maps eligible guest history, builds useful segments and launches post-stay, win-back and low-season automations.",
+  alternates: { canonical: "/repeat-guest-engine" },
+};
 
 export default function RepeatGuestEnginePage() {
   return (
