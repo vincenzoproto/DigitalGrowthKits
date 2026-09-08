@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflow-systems-vincenzo22.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflowsystems.com";
   const routes = [
     "",
     "/guest-inbox-pro",
