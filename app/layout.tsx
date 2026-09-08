@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import LanguageSwitch from "@/components/LanguageSwitch";
+import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 import "./conversion.css";
 
@@ -22,9 +22,9 @@ const structuredData = { "@context": "https://schema.org", "@type": "Organizatio
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-    <header className="site-header"><Link href="/" className="brand" aria-label="GuestFlow Systems home"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link><nav><a href="/#systems">Systems</a><a href="/#process">Process</a><a href="/#faq">FAQ</a><LanguageSwitch/><Link className="nav-cta" href="/request-setup">Request setup</Link></nav></header>
+    <SiteHeader/>
     {children}
-    <div className="mobile-conversion-bar"><div><b>Not sure which system?</b><span>Start with a 2-minute setup review.</span></div><Link href="/request-setup">Request review →</Link></div>
+    <div className="mobile-conversion-bar"><div><b>Need help choosing?</b><span>Start with a 2-minute setup review.</span></div><Link href="/request-setup">Request review →</Link></div>
     <footer><div className="footer-brand"><Link href="/" className="brand brand-dark"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link><p>Configured hospitality systems for independent hotels, B&Bs and guest houses.</p></div><div className="footer-links"><Link href="/repeat-guest-engine">Repeat Guest Engine</Link><Link href="/guest-inbox-pro">Guest Inbox Pro</Link><Link href="/digital-guest-concierge">Digital Guest Concierge</Link><Link href="/direct-booking-engine">Direct Booking Engine</Link><Link href="/request-setup">Request setup</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="mailto:info@vincenzoproto.com">Contact</a></div><div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited according to their applicable licenses.</span></div></footer>
   </body></html>;
 }
