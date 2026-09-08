@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GuestFlow Systems | Hospitality software installed for you",
-  description: "Configured guest messaging, digital concierge, repeat-guest automation and direct-booking systems for hotels and B&Bs.",
+  title: "GuestFlow Systems | Hospitality growth systems, configured for you",
+  description: "Done-for-you guest messaging, retention, digital concierge and direct-booking systems for independent hotels and B&Bs.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -12,17 +12,30 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <header className="site-header">
-          <Link href="/" className="brand"><span className="brand-mark">GF</span><span>GuestFlow Systems</span></Link>
+          <Link href="/" className="brand" aria-label="GuestFlow Systems home">
+            <span className="brand-mark">GF</span>
+            <span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span>
+          </Link>
           <nav>
-            <a href="/#products">Systems</a>
-            <a href="/#how-it-works">How it works</a>
+            <a href="/#systems">Systems</a>
+            <a href="/#process">Process</a>
+            <a href="/#faq">FAQ</a>
             <Link className="nav-cta" href="/request-setup">Request setup</Link>
           </nav>
         </header>
         {children}
         <footer>
-          <div><strong>GuestFlow Systems</strong><p>Configured hospitality systems built on proven software foundations.</p></div>
-          <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited per their applicable licenses.</span><a href="mailto:info@vincenzoproto.com">info@vincenzoproto.com</a></div>
+          <div className="footer-brand">
+            <Link href="/" className="brand brand-dark"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link>
+            <p>Configured hospitality systems for independent hotels, B&Bs and guest houses.</p>
+          </div>
+          <div className="footer-links">
+            <Link href="/repeat-guest-engine">Repeat Guest Engine</Link>
+            <Link href="/guest-inbox-pro">Guest Inbox Pro</Link>
+            <Link href="/request-setup">Request setup</Link>
+            <a href="mailto:info@vincenzoproto.com">info@vincenzoproto.com</a>
+          </div>
+          <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited according to their applicable licenses.</span></div>
         </footer>
       </body>
     </html>
