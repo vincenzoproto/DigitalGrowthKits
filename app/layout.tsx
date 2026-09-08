@@ -2,6 +2,69 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import "./conversion.css";
-const siteUrl=process.env.NEXT_PUBLIC_SITE_URL||"https://guestflowsystems.com";
-export const metadata:Metadata={metadataBase:new URL(siteUrl),title:"GuestFlow Systems | Hospitality growth systems, configured for you",description:"Done-for-you guest messaging, retention, digital concierge and direct-booking systems for independent hotels and B&Bs.",alternates:{canonical:"/"},openGraph:{title:"GuestFlow Systems",description:"Configured hospitality growth systems for independent hotels and B&Bs.",url:siteUrl,siteName:"GuestFlow Systems",type:"website"}};
-export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body><header className="site-header"><Link href="/" className="brand" aria-label="GuestFlow Systems home"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link><nav><a href="/#systems">Systems</a><a href="/#process">Process</a><a href="/#faq">FAQ</a><Link className="nav-cta" href="/request-setup">Request setup</Link></nav></header>{children}<div className="mobile-conversion-bar"><div><b>Not sure which system?</b><span>Start with a 2-minute setup review.</span></div><Link href="/request-setup">Request review →</Link></div><footer><div className="footer-brand"><Link href="/" className="brand brand-dark"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link><p>Configured hospitality systems for independent hotels, B&Bs and guest houses.</p></div><div className="footer-links"><Link href="/repeat-guest-engine">Repeat Guest Engine</Link><Link href="/guest-inbox-pro">Guest Inbox Pro</Link><Link href="/request-setup">Request setup</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="mailto:hello@guestflowsystems.com">hello@guestflowsystems.com</a></div><div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited according to their applicable licenses.</span></div></footer></body></html>}
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflowsystems.com";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  applicationName: "GuestFlow Systems",
+  title: {
+    default: "GuestFlow Systems | Hospitality growth systems, configured for you",
+    template: "%s | GuestFlow Systems",
+  },
+  description: "Done-for-you guest messaging, repeat-guest, digital concierge and direct-booking systems for independent hotels, B&Bs and guest houses.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "GuestFlow Systems",
+    description: "Done-for-you hospitality systems configured around real operating problems.",
+    url: siteUrl,
+    siteName: "GuestFlow Systems",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GuestFlow Systems",
+    description: "Configured hospitality systems for guest messaging, retention, digital concierge and direct booking.",
+  },
+  robots: { index: true, follow: true },
+  category: "hospitality technology",
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "GuestFlow Systems",
+  url: siteUrl,
+  description: "Done-for-you hospitality systems for independent accommodation businesses.",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Hospitality systems",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Guest Inbox Pro" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Digital Guest Concierge" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Repeat Guest Engine" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Direct Booking Engine" } },
+    ],
+  },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <header className="site-header">
+          <Link href="/" className="brand" aria-label="GuestFlow Systems home"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link>
+          <nav><a href="/#systems">Systems</a><a href="/#process">Process</a><a href="/#faq">FAQ</a><Link className="nav-cta" href="/request-setup">Request setup</Link></nav>
+        </header>
+        {children}
+        <div className="mobile-conversion-bar"><div><b>Not sure which system?</b><span>Start with a 2-minute setup review.</span></div><Link href="/request-setup">Request review →</Link></div>
+        <footer>
+          <div className="footer-brand"><Link href="/" className="brand brand-dark"><span className="brand-mark">GF</span><span className="brand-copy"><strong>GuestFlow</strong><small>Systems</small></span></Link><p>Configured hospitality systems for independent hotels, B&Bs and guest houses.</p></div>
+          <div className="footer-links"><Link href="/repeat-guest-engine">Repeat Guest Engine</Link><Link href="/guest-inbox-pro">Guest Inbox Pro</Link><Link href="/digital-guest-concierge">Digital Guest Concierge</Link><Link href="/direct-booking-engine">Direct Booking Engine</Link><Link href="/request-setup">Request setup</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="mailto:info@vincenzoproto.com">Contact</a></div>
+          <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited according to their applicable licenses.</span></div>
+        </footer>
+      </body>
+    </html>
+  );
+}
