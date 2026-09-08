@@ -13,12 +13,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <Link href="/" className="brand"><span className="brand-mark">GF</span><span>GuestFlow Systems</span></Link>
-          <nav><a href="/#products">Systems</a><a href="mailto:info@vincenzoproto.com">Contact</a></nav>
+          <nav>
+            <a href="/#products">Systems</a>
+            <a href="/#how-it-works">How it works</a>
+            <Link className="nav-cta" href="/request-setup">Request setup</Link>
+          </nav>
         </header>
         {children}
         <footer>
           <div><strong>GuestFlow Systems</strong><p>Configured hospitality systems built on proven software foundations.</p></div>
-          <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited per their applicable licenses.</span></div>
+          <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited per their applicable licenses.</span><a href="mailto:info@vincenzoproto.com">info@vincenzoproto.com</a></div>
         </footer>
       </body>
     </html>
