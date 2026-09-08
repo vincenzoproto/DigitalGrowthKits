@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: Product }) {
     "direct-booking-engine": "/direct-booking-engine",
   };
   const productPage = productPages[product.id];
-  const setupHref = `/request-setup?product=${encodeURIComponent(product.slug)}`;
+  const buyHref = `/buy/${product.id}`;
 
   return (
     <article className="product-card">
@@ -23,9 +23,10 @@ export default function ProductCard({ product }: { product: Product }) {
         {product.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
       </ul>
       <div className="card-actions">
-        <Link className="buy-button button-link" href={productPage}>See offer & scope</Link>
-        <Link className="buy-button button-link secondary-button" href={setupHref}>Request setup</Link>
+        <Link className="buy-button button-link" href={buyHref}>Buy setup</Link>
+        <Link className="buy-button button-link secondary-button" href={productPage}>See offer & scope</Link>
       </div>
+      <p className="card-payment-note">Secure checkout by Stripe. You can also review the full scope before buying.</p>
     </article>
   );
 }
