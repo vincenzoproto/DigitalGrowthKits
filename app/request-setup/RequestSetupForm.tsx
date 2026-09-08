@@ -17,6 +17,7 @@ type Status = { type: "success" | "fallback" | "error"; message: string } | null
 export default function RequestSetupForm() {
   const searchParams = useSearchParams();
   const requested = searchParams.get("product") || "Repeat Guest Engine";
+  const referral = (searchParams.get("ref") || "").slice(0,40);
   const defaultProduct = useMemo(() => systems.find((name) => name.toLowerCase().replaceAll(" ", "-") === requested) || systems.find((name) => name === requested) || "Repeat Guest Engine", [requested]);
   const defaultGoal = goals.find(([, , system]) => system === defaultProduct)?.[0] || "repeat";
 
@@ -48,6 +49,7 @@ export default function RequestSetupForm() {
     const body = [
       `System: ${product}`,
       `Primary goal: ${goalLabel}`,
+      `Referral: ${referral || "direct"}`,
       `Property: ${propertyName || "-"}`,
       `Property type: ${propertyType || "-"}`,
       `Rooms / units: ${rooms || "-"}`,
@@ -78,7 +80,7 @@ export default function RequestSetupForm() {
       const response = await fetch("/api/setup-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ product, goal: goalLabel, propertyName, propertyType, contactName, email, website, rooms, currentStack, databaseSize, notes, companyWebsite }),
+        body: JSON.stringify({ product, goal: goalLabel, referral, propertyName, propertyType, contactName, email, website, rooms, currentStack, databaseSize, notes, companyWebsite }),
       });
 
       if (response.ok) {
@@ -123,6 +125,7 @@ export default function RequestSetupForm() {
 
       <details className="optional-details"><summary>Add technical context <span>optional</span></summary><div className="optional-fields"><div className="form-grid-2"><label>Current PMS / tools<input value={currentStack} onChange={(e) => setCurrentStack(e.target.value)} placeholder="Cloudbeds, Opera, Booking.com..." className="setup-field" /></label><label>Past-guest database<input value={databaseSize} onChange={(e) => setDatabaseSize(e.target.value)} placeholder="3,000 contacts / not sure" className="setup-field" /></label></div><label>Anything else we should know?<textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={4} placeholder="Current bottleneck, desired outcome or timing." className="setup-field" /></label></div></details>
 
+      {referral && <p className="form-note">Partner referral: <strong>{referral}</strong></p>}
       <label className="honeypot-field" aria-hidden="true">Company website confirmation<input tabIndex={-1} autoComplete="off" value={companyWebsite} onChange={(e) => setCompanyWebsite(e.target.value)} /></label>
 
       <label className="form-consent"><input required type="checkbox" /><span>I agree to be contacted about this setup request and I have read the <Link href="/privacy">Privacy information</Link>.</span></label>
