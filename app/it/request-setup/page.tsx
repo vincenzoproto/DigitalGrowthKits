@@ -1,6 +1,9 @@
+import { createPageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Suspense } from "react";
 import RequestSetupFormIt from "./RequestSetupFormIt";
+
+export const metadata = createPageMetadata({"path": "/it/request-setup", "title": "Richiedi una valutazione per il tuo hotel | GuestFlow", "description": "Descrivi la tua struttura e gli strumenti attuali. Valutiamo messaggi ospiti, riattivazione clienti, concierge o prenotazioni dirette prima di definire il setup."});
 
 export default function RequestSetupItalianPage(){
   return <main className="setup-shell">

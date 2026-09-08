@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { setTimeout as delay } from "node:timers/promises";
+import { INDEXABLE_PATHS, languageAlternates } from "../lib/seo.ts";
 
 // Run after `npm run build`. All requests stay on loopback; no real email,
 // payment session, or CRM record is created.
@@ -15,6 +16,36 @@ let webhookStatus = 200;
 let app;
 let appFailure;
 let appOutput = "";
+
+function decodeHtml(value) {
+  const named = { amp: "&", quot: '"', apos: "'", lt: "<", gt: ">" };
+  return value.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (entity, code) => {
+    if (code.startsWith("#x")) return String.fromCodePoint(parseInt(code.slice(2), 16));
+    if (code.startsWith("#")) return String.fromCodePoint(parseInt(code.slice(1), 10));
+    return named[code.toLowerCase()] || entity;
+  });
+}
+
+function attributes(tag) {
+  return Object.fromEntries([...tag.matchAll(/([\w:-]+)\s*=\s*(["'])(.*?)\2/g)]
+    .map(([, name, , value]) => [name.toLowerCase(), decodeHtml(value)]));
+}
+
+function metadataFrom(html) {
+  const links = [...html.matchAll(/<link\b[^>]*>/gi)].map(([tag]) => attributes(tag));
+  const meta = [...html.matchAll(/<meta\b[^>]*>/gi)].map(([tag]) => attributes(tag));
+  return {
+    title: decodeHtml(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || ""),
+    description: meta.find((item) => item.name === "description")?.content || "",
+    canonicals: links.filter((link) => link.rel === "canonical").map((link) => link.href),
+    languages: Object.fromEntries(links.filter((link) => link.rel === "alternate" && link.hreflang)
+      .map((link) => [link.hreflang, link.href])),
+    openGraph: Object.fromEntries(meta.filter((item) => item.property?.startsWith("og:"))
+      .map((item) => [item.property, item.content])),
+    robots: meta.find((item) => item.name === "robots")?.content || "",
+    htmlLang: attributes(html.match(/<html\b[^>]*>/i)?.[0] || "").lang,
+  };
+}
 
 const webhook = createServer(async (request, response) => {
   try {
@@ -106,12 +137,58 @@ try {
   }
   assert.ok(ready, "Next did not become ready within 30 seconds");
 
-  for (const path of ["/audit", "/it/audit", "/it/partner"]) {
-    const response = await request(path);
-    assert.equal(response.status, 200, `${path} must render successfully`);
-    await response.arrayBuffer();
+  const publicOrigin = "https://www.guestflowsystems.com";
+  const pageTitles = [];
+  const pageDescriptions = [];
+  let homeHtml = "";
+  for (const path of INDEXABLE_PATHS) {
+    const response = await request(path, { headers: { "accept-language": "en" } });
+    assert.equal(response.status, 200, `${path} must render successfully without a redirect`);
+    const html = await response.text();
+    if (path === "/") homeHtml = html;
+    const metadata = metadataFrom(html);
+    const expectedCanonical = `${publicOrigin}${path}`;
+    assert.deepEqual(metadata.canonicals, [expectedCanonical], `${path} must have exactly one self canonical`);
+    assert.ok(metadata.title.trim().length > 8, `${path} needs a page title`);
+    assert.ok(metadata.description.trim().length > 25, `${path} needs a page description`);
+    pageTitles.push(metadata.title);
+    pageDescriptions.push(metadata.description);
+    assert.equal(metadata.openGraph["og:url"], expectedCanonical, `${path} needs its own social URL`);
+    assert.equal(metadata.openGraph["og:title"], metadata.title, `${path} needs its own social title`);
+    assert.equal(metadata.openGraph["og:description"], metadata.description, `${path} needs its own social description`);
+    assert.equal(metadata.htmlLang, path === "/it" || path.startsWith("/it/") ? "it" : "en", `${path} must use the correct document language`);
+    assert.deepEqual(metadata.languages, languageAlternates(path), `${path} must declare only its real reciprocal translations`);
+    assert.doesNotMatch(metadata.robots, /noindex/i, `${path} is a public indexable page`);
   }
-  console.log("PASS: English/Italian audit and public partner pages render");
+  assert.equal(new Set(pageTitles).size, INDEXABLE_PATHS.length, "Public pages must not inherit duplicate homepage titles");
+  assert.equal(new Set(pageDescriptions).size, INDEXABLE_PATHS.length, "Public pages need distinct descriptions");
+
+  const sitemapResponse = await request("/sitemap.xml");
+  assert.equal(sitemapResponse.status, 200);
+  const sitemap = await sitemapResponse.text();
+  const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(([, url]) => decodeHtml(url));
+  assert.deepEqual(sitemapUrls.sort(), INDEXABLE_PATHS.map((path) => `${publicOrigin}${path}`).sort());
+  assert.ok(sitemapUrls.includes(`${publicOrigin}/it/partner`), "The Italian partner page must be discoverable");
+  assert.doesNotMatch(sitemap, /\/founder|\/success/, "Private checkout flows must stay out of the sitemap");
+  const robotsResponse = await request("/robots.txt");
+  assert.equal(robotsResponse.status, 200);
+  assert.match(await robotsResponse.text(), /Sitemap: https:\/\/www\.guestflowsystems\.com\/sitemap\.xml/);
+
+  const structuredData = [...homeHtml.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+    .filter(([, tag]) => attributes(tag).type === "application/ld+json")
+    .flatMap(([, , json]) => JSON.parse(json));
+  const organization = structuredData.find((item) => item["@type"] === "Organization");
+  assert.ok(organization, "The homepage must identify the GuestFlow organization");
+  assert.equal(organization.name, "GuestFlow Systems");
+  assert.equal(organization.email, "info@vincenzoproto.com");
+  assert.equal(organization.contactPoint.email, "info@vincenzoproto.com");
+  const logo = new URL(typeof organization.logo === "string" ? organization.logo : organization.logo.url);
+  assert.equal(logo.origin, publicOrigin, "The organization logo must identify a public site asset");
+  const logoResponse = await request(logo.pathname);
+  assert.equal(logoResponse.status, 200, "The structured-data logo must exist");
+  assert.match(logoResponse.headers.get("content-type") || "", /image\/svg\+xml/);
+  assert.match(await logoResponse.text(), /<svg\b/);
+  console.log(`PASS: ${INDEXABLE_PATHS.length} public pages, self canonicals, language metadata, sitemap and organization logo`);
 
   const referral = "smoke_partner-42";
   const landing = await request(`/audit?ref=${referral}`);
