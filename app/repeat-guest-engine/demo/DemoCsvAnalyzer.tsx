@@ -13,6 +13,7 @@ type Summary = {
   highValue: number;
   suppressed: number;
   invalid: number;
+  avgEligibleBookingValue: number;
 };
 
 const REQUIRED = ["email", "last_stay_date", "last_booking_value", "stay_season", "marketing_eligible", "unsubscribed"];
@@ -66,6 +67,10 @@ function daysSince(value?: string) {
   return Math.floor((Date.now() - date.getTime()) / 86400000);
 }
 
+function euro(value: number) {
+  return new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
+}
+
 export default function DemoCsvAnalyzer() {
   const [rows, setRows] = useState<GuestRow[]>([]);
   const [fileName, setFileName] = useState("");
@@ -79,6 +84,8 @@ export default function DemoCsvAnalyzer() {
     let highValue = 0;
     let suppressed = 0;
     let invalid = 0;
+    let eligibleBookingValueTotal = 0;
+    let eligibleBookingValueCount = 0;
 
     rows.forEach((row) => {
       const emailValid = /.+@.+\..+/.test(row.email ?? "");
@@ -94,9 +101,23 @@ export default function DemoCsvAnalyzer() {
       if (marketingEligible && days >= 180) dormant += 1;
       if (marketingEligible && (row.stay_season ?? "").toLowerCase() === "low") lowSeason += 1;
       if (marketingEligible && bookingValue >= 500) highValue += 1;
+      if (marketingEligible && Number.isFinite(bookingValue) && bookingValue >= 0) {
+        eligibleBookingValueTotal += bookingValue;
+        eligibleBookingValueCount += 1;
+      }
     });
 
-    return { imported: rows.length, eligible, recent, dormant, lowSeason, highValue, suppressed, invalid };
+    return {
+      imported: rows.length,
+      eligible,
+      recent,
+      dormant,
+      lowSeason,
+      highValue,
+      suppressed,
+      invalid,
+      avgEligibleBookingValue: eligibleBookingValueCount ? eligibleBookingValueTotal / eligibleBookingValueCount : 0,
+    };
   }, [rows]);
 
   async function handleFile(file?: File) {
@@ -165,6 +186,12 @@ export default function DemoCsvAnalyzer() {
     },
   ];
 
+  const valueScenarios = [0.01, 0.03, 0.05].map((rate) => ({
+    rate,
+    bookings: summary.eligible * rate,
+    grossBookingValue: summary.eligible * rate * summary.avgEligibleBookingValue,
+  }));
+
   return (
     <section style={{ marginTop: 18, background: "#fffef9", border: "1px solid #dcd9cf", borderRadius: 18, padding: 24 }}>
       <span style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase" }}>Live local test · no upload</span>
@@ -189,6 +216,29 @@ export default function DemoCsvAnalyzer() {
                 <div style={{ fontSize: 12, color: "#62685f", marginTop: 4 }}>{label}</div>
               </div>
             ))}
+          </div>
+
+          <div style={{ marginTop: 28 }}>
+            <span style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase" }}>Illustrative value scenarios · not a forecast</span>
+            <h3 style={{ fontSize: 28, margin: "8px 0 6px" }}>What could a small repeat-booking lift mean?</h3>
+            <p style={{ color: "#62685f", maxWidth: 900, marginTop: 0 }}>
+              These scenarios simply apply 1%, 3% and 5% hypothetical rebooking rates to the marketing-eligible audience and multiply them by the historical average booking value in this CSV ({euro(summary.avgEligibleBookingValue)}). They do not predict campaign performance, occupancy, profit or incremental revenue.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))", gap: 14, marginTop: 18 }}>
+              {valueScenarios.map((scenario) => (
+                <article key={scenario.rate} style={{ border: "1px solid #dcd9cf", borderRadius: 16, padding: 18, background: "white" }}>
+                  <span style={{ fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", color: "#7a8078" }}>{Math.round(scenario.rate * 100)}% illustrative rebooking rate</span>
+                  <div style={{ fontSize: 34, fontWeight: 800, marginTop: 8 }}>{euro(scenario.grossBookingValue)}</div>
+                  <div style={{ color: "#62685f", fontSize: 13, marginTop: 5 }}>illustrative gross booking value</div>
+                  <div style={{ marginTop: 13, paddingTop: 13, borderTop: "1px solid #ece8df", color: "#51584f", fontSize: 13 }}>
+                    ≈ {scenario.bookings.toFixed(1)} bookings from {summary.eligible} eligible contacts
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div style={{ marginTop: 12, fontSize: 12, color: "#737970" }}>
+              For decision support only. Actual results depend on offer, timing, deliverability, consent status, demand, price, availability and many other factors. Historical booking value is not a promise of future booking value.
+            </div>
           </div>
 
           <div style={{ marginTop: 28 }}>
