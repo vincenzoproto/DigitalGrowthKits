@@ -94,11 +94,9 @@ export default function RequestSetupForm() {
         return;
       }
 
-      setStatus({ type: "fallback", message: "Your request has not been sent. We’re opening a prepared email: press Send in your email app to complete it." });
-      window.setTimeout(() => openEmailFallback(deliveredReferral), 350);
+      setStatus({ type: "fallback", message: "Your request has not been sent. You can open the prepared email below, then press Send in your email app to complete it." });
     } catch {
-      setStatus({ type: "fallback", message: "We couldn’t confirm delivery. We’re opening a prepared email: press Send in your email app to complete the request." });
-      window.setTimeout(() => openEmailFallback(), 350);
+      setStatus({ type: "fallback", message: "We couldn’t confirm delivery. You can open the prepared email below, then press Send in your email app to complete the request." });
     } finally {
       setSending(false);
     }
@@ -138,8 +136,8 @@ export default function RequestSetupForm() {
 
       {status && <div className={`setup-status ${status.type}`} role="status">{status.message}</div>}
 
-      <div className="setup-actions"><button type="submit" className="buy-button" disabled={sending}>{sending ? "Sending request…" : "Send setup request →"}</button><button type="button" onClick={copyRequest} className="buy-button secondary-button">{copied ? "Request copied" : "Copy request"}</button></div>
-      <p className="form-note">No passwords, payment details or guest-level data are requested here. Direct delivery is attempted first; if the delivery provider is unavailable, a prepared email opens as a fallback.</p>
+      <div className="setup-actions"><button type="submit" className="buy-button" disabled={sending}>{sending ? "Sending request…" : "Send setup request →"}</button>{status?.type === "fallback" && <button type="button" onClick={() => openEmailFallback()} className="buy-button secondary-button">Open prepared email</button>}<button type="button" onClick={copyRequest} className="buy-button secondary-button">{copied ? "Request copied" : "Copy request"}</button></div>
+      <p className="form-note">No passwords, payment details or guest-level data are requested here. Direct delivery is attempted first; if it is unavailable, you can choose to open a prepared email and send it from your email app.</p>
     </form>
   );
 }

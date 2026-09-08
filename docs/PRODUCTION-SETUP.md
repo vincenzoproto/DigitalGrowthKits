@@ -41,6 +41,10 @@ after durable CRM storage and owner notification. Email-only fallback does not
 automatically create a CRM record; reconcile it privately. Do not store contact
 details or payment data in this public repository.
 
+The current webhook client sends `Content-Type: application/json` and no bearer
+or signature header. Use a compatible endpoint with an opaque URL token, or
+implement the authentication required by the CRM before configuring its URL.
+
 ## Referrals and payments
 
 A valid partner code contains 1–40 letters, digits, hyphens or underscores. A
@@ -58,6 +62,10 @@ Existing Stripe links were verified on 2026-09-08: four standard offers are
 €690, €490, €990 and €1,490; Founder Launch is €690 with a three-completed-session
 limit. The links belong to the existing Vincenzo Proto account. Keep prices and
 the Founder cap in Stripe aligned with the website.
+
+All five Payment Links currently redirect after completion to
+`https://guestflowsystems.com/success?session_id={CHECKOUT_SESSION_ID}`. Keep the
+session placeholder in that redirect so the application can verify the payment.
 
 ## Release verification
 
