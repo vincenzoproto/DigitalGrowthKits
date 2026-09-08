@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import RequestSetupForm from "./RequestSetupForm";
+
+export const metadata: Metadata = {
+  title: "Request a Setup Review | GuestFlow Systems",
+  description: "Tell GuestFlow Systems what is blocking guest messaging, repeat bookings, digital guest experience or direct bookings. We map the right implementation scope before access or installation.",
+  alternates: { canonical: "/request-setup" },
+};
 
 export default function RequestSetupPage() {
   return (
@@ -14,7 +21,7 @@ export default function RequestSetupPage() {
         </div>
         <aside className="setup-side-note">
           <strong>No technical prep required.</strong>
-          <p>You do not need to choose servers, integrations or infrastructure first. Start with the problem and the tools you already use.</p>
+          <p>Start with the business problem and the tools you already use. We identify dependencies, what can stay in place and what the launch package should actually include.</p>
         </aside>
       </section>
       <Suspense fallback={<p>Loading setup form…</p>}>
