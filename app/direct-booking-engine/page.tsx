@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "../repeat-guest-engine/repeat-guest.module.css";
+
+export const metadata: Metadata = {
+  title: "Direct Booking Engine | GuestFlow Systems",
+  description: "A configured hotel website and reservation path for independent accommodation businesses that want a clearer direct-sales channel.",
+  alternates: { canonical: "/direct-booking-engine" },
+};
 
 export default function DirectBookingEnginePage() {
   return (
@@ -9,7 +16,7 @@ export default function DirectBookingEnginePage() {
           <span className={styles.eyebrow}>Direct booking infrastructure</span>
           <h1>Own a booking path that belongs to your property.</h1>
           <p className={styles.lead}>Direct Booking Engine is a configured hotel website and reservation setup for independent accommodation businesses that want a clear direct-sales path instead of relying only on third-party marketplaces.</p>
-          <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=direct-booking-engine">Request setup</Link><Link className={styles.secondary} href="/#products">Compare systems</Link></div>
+          <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=direct-booking-engine">Request setup</Link><Link className={styles.secondary} href="/direct-booking-engine/demo">Open visual demo</Link><Link className={styles.secondary} href="/#systems">Compare systems</Link></div>
         </div>
         <aside className={styles.priceCard}>
           <span>Launch package</span><strong>€1,490</strong><p>One property · website structure · room setup · booking workflow · launch configuration · owner handover</p>
@@ -39,7 +46,7 @@ export default function DirectBookingEnginePage() {
       <section className={styles.section}>
         <span className={styles.eyebrow}>Before implementation</span><h2>We review the current stack first.</h2>
         <p className={styles.leadSmall}>The setup review covers your current website, PMS or booking tools, room inventory, payment requirements, domain/hosting situation and any channel-manager dependencies. We define the launch scope before moving or connecting live booking infrastructure.</p>
-        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=direct-booking-engine">Request the setup review</Link></div>
+        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=direct-booking-engine">Request the setup review</Link><Link className={styles.secondary} href="/direct-booking-engine/demo">Preview the booking journey</Link></div>
       </section>
     </main>
   );
