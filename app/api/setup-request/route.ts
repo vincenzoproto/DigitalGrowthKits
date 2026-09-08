@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { REFERRAL_COOKIE, resolveReferral } from "@/lib/referrals";
 
 export const runtime = "nodejs";
 
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     const data = {
       product: clean(raw.product, 120),
-      referral: clean(raw.referral, 40),
+      referral: resolveReferral(raw.referral, request.cookies.get(REFERRAL_COOKIE)?.value) || "",
       propertyName: clean(raw.propertyName, 180),
       propertyType: clean(raw.propertyType, 80),
       contactName: clean(raw.contactName, 140),
@@ -66,8 +67,12 @@ export async function POST(request: NextRequest) {
     const webhook = process.env.SETUP_REQUEST_WEBHOOK_URL;
 
     if (webhook) {
-      const webhookResponse = await fetch(webhook, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }), cache: "no-store" });
-      if (webhookResponse.ok) return NextResponse.json({ ok: true, channel: "webhook" });
+      try {
+        const webhookResponse = await fetch(webhook, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }), cache: "no-store", signal: AbortSignal.timeout(10000) });
+        if (webhookResponse.ok) return NextResponse.json({ ok: true, channel: "webhook", referral: data.referral });
+      } catch {
+        // A provider timeout must still allow the configured email fallback.
+      }
     }
 
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -75,12 +80,16 @@ export async function POST(request: NextRequest) {
     const recipient = process.env.SETUP_REQUEST_TO || "info@vincenzoproto.com";
 
     if (resendApiKey && resendFrom) {
-      const resendResponse = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: resendFrom, to: [recipient], reply_to: data.email, subject, text }), cache: "no-store" });
-      if (resendResponse.ok) return NextResponse.json({ ok: true, channel: "email" });
-      return NextResponse.json({ ok: false, code: "DELIVERY_FAILED" }, { status: 502 });
+      try {
+        const resendResponse = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: resendFrom, to: [recipient], reply_to: data.email, subject, text }), cache: "no-store", signal: AbortSignal.timeout(10000) });
+        if (resendResponse.ok) return NextResponse.json({ ok: true, channel: "email", referral: data.referral });
+      } catch {
+        // Return a delivery error, not a misleading validation error.
+      }
+      return NextResponse.json({ ok: false, code: "DELIVERY_FAILED", referral: data.referral }, { status: 502 });
     }
 
-    return NextResponse.json({ ok: false, code: "DELIVERY_NOT_CONFIGURED" }, { status: 503 });
+    return NextResponse.json({ ok: false, code: webhook ? "DELIVERY_FAILED" : "DELIVERY_NOT_CONFIGURED", referral: data.referral }, { status: webhook ? 502 : 503 });
   } catch {
     return NextResponse.json({ ok: false, code: "INVALID_REQUEST" }, { status: 400 });
   }

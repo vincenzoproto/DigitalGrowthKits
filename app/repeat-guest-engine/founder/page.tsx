@@ -16,7 +16,7 @@ export default function FounderPage() {
         <h1>Launch Repeat Guest Engine for €690.</h1>
         <p className={styles.lead}>A limited first-client offer for independent hotels and B&Bs that already have useful guest history and want a structured repeat-booking workflow.</p>
         <div className={styles.actions}>
-          <a className={styles.primary} href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">Secure a Founder slot</a>
+          <a className={styles.primary} href="/buy/repeat-guest-engine-founder">Secure a Founder slot</a>
           <Link className={styles.secondary} href="/repeat-guest-engine/demo">See the walkthrough first</Link>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function FounderPage() {
     <section className={styles.section}>
       <span className={styles.eyebrow}>Before you buy</span><h2>Good fit matters more than the discount.</h2>
       <p className={styles.leadSmall}>This offer works best when the property has usable historical guest data, a direct-booking destination and a clear way to identify which contacts can receive promotional communications. If you are unsure, request the setup review first.</p>
-      <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=repeat-guest-engine">Request a setup review</Link><a className={styles.secondary} href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">Proceed to Founder checkout</a></div>
+      <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=repeat-guest-engine">Request a setup review</Link><a className={styles.secondary} href="/buy/repeat-guest-engine-founder">Proceed to Founder checkout</a></div>
     </section>
   </main>;
 }

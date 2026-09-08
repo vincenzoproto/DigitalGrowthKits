@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { normalizeReferral } from "@/lib/referrals";
 
 function scoreAudit(rooms:number, database:number, campaigns:string, direct:string, weakMonths:number) {
   let score = 0;
@@ -21,7 +22,7 @@ function scoreAudit(rooms:number, database:number, campaigns:string, direct:stri
 
 export default function AuditCalculator({lang="en"}:{lang?:"en"|"it"}) {
   const searchParams = useSearchParams();
-  const referral = (searchParams.get("ref") || "").slice(0,40);
+  const referral = normalizeReferral(searchParams.get("ref"));
   const it = lang === "it";
   const [rooms,setRooms] = useState(20);
   const [database,setDatabase] = useState(500);
@@ -63,7 +64,7 @@ export default function AuditCalculator({lang="en"}:{lang?:"en"|"it"}) {
           <Link className="primary" href={reviewHref}>{copy.review}</Link>
           <Link className="secondary-button button-link" href="/repeat-guest-engine/demo">{copy.demo}</Link>
         </div>
-        {level === "high" && <a className="founder-audit-link" href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">{copy.founder} →</a>}
+        {level === "high" && <a className="founder-audit-link" href="/buy/repeat-guest-engine-founder">{copy.founder} →</a>}
       </>}
       <small>{copy.note}{referral ? ` · Ref: ${referral}` : ""}</small>
     </aside>

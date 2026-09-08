@@ -73,7 +73,7 @@ export default async function ItalianProduct({ params }: { params: Promise<{ slu
     {isRepeatGuest && <section className="product-section">
       <span className="eyebrow">Founder offer</span><h2>€690 una tantum per i primi 3 setup qualificati.</h2>
       <p className="lead">Include una struttura, mappatura dati, segmentazione, tre automazioni core, reporting e handover. Hosting/VPS, provider email o SMS e altri servizi di terze parti restano separati. Prima del pagamento confermiamo che il tuo stack sia compatibile e definiamo il perimetro.</p>
-      <div className="hero-actions"><Link className="primary primary-large" href="/it/request-setup?product=repeat-guest-engine">Richiedi la valutazione</Link><a className="secondary-link" href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">Già qualificato? Blocca lo slot →</a></div>
+      <div className="hero-actions"><Link className="primary primary-large" href="/it/request-setup?product=repeat-guest-engine">Richiedi la valutazione</Link><a className="secondary-link" href="/buy/repeat-guest-engine-founder">Già qualificato? Blocca lo slot →</a></div>
       <p style={{marginTop:12,fontSize:13,opacity:.72}}>Il checkout è destinato a strutture che hanno già confermato con noi fattibilità e scope.</p>
     </section>}
 

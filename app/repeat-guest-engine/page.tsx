@@ -75,7 +75,7 @@ export default function RepeatGuestEnginePage() {
       <section className={styles.section}>
         <span className={styles.eyebrow}>Founder offer</span><h2>€690 one-time for the first 3 qualified setups.</h2>
         <p className={styles.leadSmall}>Includes one property, data mapping, segmentation, three core automations, reporting and staff handover. Hosting/VPS, email or SMS provider costs and other third-party services are separate. We confirm compatibility and scope before payment.</p>
-        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=repeat-guest-engine">Request setup review</Link><a className={styles.secondary} href="https://book.stripe.com/aFafZheYd6j28lu38KabK06">Already qualified? Secure the slot</a></div>
+        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=repeat-guest-engine">Request setup review</Link><a className={styles.secondary} href="/buy/repeat-guest-engine-founder">Already qualified? Secure the slot</a></div>
       </section>
 
       <section className={styles.section}>

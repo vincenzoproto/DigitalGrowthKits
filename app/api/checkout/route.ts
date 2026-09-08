@@ -1,21 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProduct } from "@/lib/products";
+import { checkoutAttribution, REFERRAL_COOKIE, resolveReferral } from "@/lib/referrals";
+import { randomInt } from "node:crypto";
 
 export async function POST(request: NextRequest) {
   try {
     const secretKey = process.env.STRIPE_SECRET_KEY;
     if (!secretKey) return NextResponse.json({ error: "Stripe is not configured yet." }, { status: 503 });
 
-    const { productId } = await request.json();
+    const { productId, referral: requestedReferral } = await request.json();
     const product = getProduct(productId);
     if (!product) return NextResponse.json({ error: "Product not found." }, { status: 404 });
 
     const stripe = new Stripe(secretKey);
-    const origin = process.env.NEXT_PUBLIC_SITE_URL || request.headers.get("origin") || new URL(request.url).origin;
+    const origin = process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
+    const referral = resolveReferral(
+      requestedReferral,
+      request.nextUrl.searchParams.get("ref"),
+      request.cookies.get(REFERRAL_COOKIE)?.value,
+    );
+    const integrationSuffix = Array.from({ length: 8 }, () => String.fromCharCode(97 + randomInt(26))).join("");
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      integration_identifier: `guestflow_checkout_${integrationSuffix}`,
       customer_creation: "always",
       allow_promotion_codes: true,
       billing_address_collection: "auto",
@@ -32,7 +41,7 @@ export async function POST(request: NextRequest) {
           },
         },
       ],
-      metadata: { productId: product.id },
+      ...checkoutAttribution(product.id, referral),
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/#products`,
     });
