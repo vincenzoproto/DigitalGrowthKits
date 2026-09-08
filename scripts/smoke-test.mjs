@@ -138,6 +138,10 @@ try {
   assert.ok(ready, "Next did not become ready within 30 seconds");
 
   const publicOrigin = "https://www.guestflowsystems.com";
+  // Next serializes the origin-only homepage without the optional trailing
+  // slash. Compare parsed absolute URLs while retaining path/query checks.
+  const absoluteUrl = (url) => new URL(url).href;
+  const absoluteAlternates = (values) => Object.fromEntries(Object.entries(values || {}).map(([language, url]) => [language, absoluteUrl(url)]));
   const pageTitles = [];
   const pageDescriptions = [];
   let homeHtml = "";
@@ -148,16 +152,16 @@ try {
     if (path === "/") homeHtml = html;
     const metadata = metadataFrom(html);
     const expectedCanonical = `${publicOrigin}${path}`;
-    assert.deepEqual(metadata.canonicals, [expectedCanonical], `${path} must have exactly one self canonical`);
+    assert.deepEqual(metadata.canonicals.map(absoluteUrl), [expectedCanonical], `${path} must have exactly one self canonical`);
     assert.ok(metadata.title.trim().length > 8, `${path} needs a page title`);
     assert.ok(metadata.description.trim().length > 25, `${path} needs a page description`);
     pageTitles.push(metadata.title);
     pageDescriptions.push(metadata.description);
-    assert.equal(metadata.openGraph["og:url"], expectedCanonical, `${path} needs its own social URL`);
+    assert.equal(absoluteUrl(metadata.openGraph["og:url"]), expectedCanonical, `${path} needs its own social URL`);
     assert.equal(metadata.openGraph["og:title"], metadata.title, `${path} needs its own social title`);
     assert.equal(metadata.openGraph["og:description"], metadata.description, `${path} needs its own social description`);
     assert.equal(metadata.htmlLang, path === "/it" || path.startsWith("/it/") ? "it" : "en", `${path} must use the correct document language`);
-    assert.deepEqual(metadata.languages, languageAlternates(path), `${path} must declare only its real reciprocal translations`);
+    assert.deepEqual(absoluteAlternates(metadata.languages), absoluteAlternates(languageAlternates(path)), `${path} must declare only its real reciprocal translations`);
     assert.doesNotMatch(metadata.robots, /noindex/i, `${path} is a public indexable page`);
   }
   assert.equal(new Set(pageTitles).size, INDEXABLE_PATHS.length, "Public pages must not inherit duplicate homepage titles");
