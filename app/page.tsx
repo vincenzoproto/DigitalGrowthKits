@@ -5,75 +5,108 @@ import { products } from "@/lib/products";
 export default function Home() {
   return (
     <main>
-      <section className="hero">
+      <section className="hero hero-premium">
         <div className="hero-copy">
           <span className="eyebrow">Done-for-you hospitality systems</span>
-          <h1>Less software to manage. More guest flow.</h1>
-          <p>GuestFlow Systems configures practical operating systems for independent hotels and B&Bs: guest messaging, digital concierge, repeat-guest campaigns and direct-booking infrastructure.</p>
+          <h1>Turn more guest activity into direct revenue.</h1>
+          <p className="hero-lead">GuestFlow Systems installs and configures practical software for independent hotels and B&Bs: guest messaging, repeat-guest automation, digital concierge and direct-booking infrastructure.</p>
           <div className="hero-actions">
-            <Link className="primary" href="/request-setup">Request a setup review</Link>
-            <a className="text-link" href="#products">Explore the systems →</a>
+            <Link className="primary primary-large" href="/request-setup">Request a setup review</Link>
+            <Link className="secondary-link" href="/repeat-guest-engine">See the featured system</Link>
           </div>
-          <p className="hero-note">Setup · configuration · handover · optional managed support</p>
+          <div className="hero-proof">
+            <span>Defined launch scope</span>
+            <span>Configured for one property</span>
+            <span>Optional managed support</span>
+          </div>
         </div>
-        <div className="hero-panel">
-          <span>Built for</span>
-          <strong>Independent hotels</strong><strong>B&Bs</strong><strong>Guest houses</strong><strong>Small hospitality teams</strong>
-        </div>
-      </section>
 
-      <section className="trust-row"><span>Clear launch scope</span><span>Configured for your property</span><span>Self-hostable foundations</span><span>Human handover</span></section>
-
-      <section className="featured-offer">
-        <div>
-          <span className="eyebrow">Featured system</span>
-          <h2>Turn your existing guest database into a repeat-booking channel.</h2>
-          <p>Repeat Guest Engine maps an eligible guest export, builds useful segments and launches three retention automations without treating the full database like one generic mailing list.</p>
-          <div className="feature-points">
-            <span>CSV / PMS export mapping</span><span>Marketing-eligible segmentation</span><span>Post-stay automation</span><span>Win-back automation</span><span>Low-season automation</span><span>Reporting & handover</span>
-          </div>
-          <div className="hero-actions">
-            <Link className="primary" href="/repeat-guest-engine">See Repeat Guest Engine</Link>
-            <Link className="text-link" href="/request-setup?product=repeat-guest-engine">Request setup →</Link>
-          </div>
-        </div>
-        <aside className="offer-card">
-          <span>Launch package</span>
-          <strong>€990</strong>
-          <p>One-property implementation including database mapping, segments, three core automations, reporting and staff handover.</p>
-          <hr />
-          <span>Optional managed service</span>
-          <strong className="small-price">€129/mo</strong>
-          <p>Campaign tuning, monitoring, segmentation updates and operational support.</p>
+        <aside className="hero-dashboard-card" aria-label="GuestFlow Systems overview">
+          <div className="dashboard-card-head"><span>GuestFlow overview</span><b>Live operating layer</b></div>
+          <div className="dashboard-metric"><small>Guest database</small><strong>Segment</strong><span>Past guests organised into useful cohorts</span></div>
+          <div className="dashboard-line" />
+          <div className="dashboard-metric"><small>Automations</small><strong>Reactivate</strong><span>Post-stay, win-back and low-season flows</span></div>
+          <div className="dashboard-line" />
+          <div className="dashboard-metric"><small>Direct revenue</small><strong>Measure</strong><span>Track campaigns and repeat-booking activity</span></div>
         </aside>
       </section>
 
-      <section className="products-section" id="products">
-        <div className="section-heading"><span className="eyebrow">Systems</span><h2>Buy an operating outcome, not another template.</h2><p>Each offer starts from a proven software foundation and is configured around a specific hospitality workflow.</p></div>
+      <section className="logo-strip" aria-label="Who GuestFlow is built for">
+        <span>INDEPENDENT HOTELS</span><span>B&amp;BS</span><span>GUEST HOUSES</span><span>APARTHOTELS</span><span>SMALL GROUPS</span>
+      </section>
+
+      <section className="value-section">
+        <div className="section-heading compact-heading"><span className="eyebrow">Why GuestFlow</span><h2>We sell the implementation, not the software headache.</h2></div>
+        <div className="value-grid">
+          <article><span className="value-number">01</span><h3>Start from a real operating problem</h3><p>No generic software bundle. Each system is tied to one hospitality outcome.</p></article>
+          <article><span className="value-number">02</span><h3>Configure proven foundations</h3><p>We build on mature software stacks and adapt the workflow around the property.</p></article>
+          <article><span className="value-number">03</span><h3>Hand over something usable</h3><p>Launch scope, documentation, ownership and optional managed support are defined before go-live.</p></article>
+        </div>
+      </section>
+
+      <section className="featured-offer featured-premium">
+        <div className="featured-copy">
+          <span className="eyebrow light-eyebrow">Featured system</span>
+          <h2>Repeat Guest Engine</h2>
+          <p className="featured-kicker">Turn the guest history you already have into a structured repeat-booking channel.</p>
+          <p>We map a clean PMS or CSV export, separate marketing-eligible contacts, build useful segments and configure three core automations: post-stay, win-back and low-season reactivation.</p>
+          <div className="feature-points dark-points">
+            <span>CSV / PMS mapping</span><span>Guest segmentation</span><span>Post-stay</span><span>Win-back</span><span>Low-season</span><span>Reporting</span>
+          </div>
+          <div className="hero-actions">
+            <Link className="primary light-primary" href="/repeat-guest-engine">View full system</Link>
+            <Link className="ghost-link" href="/repeat-guest-engine/demo">Open dashboard demo →</Link>
+          </div>
+        </div>
+        <aside className="pricing-panel">
+          <div className="pricing-label">Launch package</div>
+          <div className="pricing-amount">€990</div>
+          <p>One property · database mapping · segmentation · three core automations · reporting · staff handover.</p>
+          <div className="pricing-divider" />
+          <div className="pricing-label">Optional managed service</div>
+          <div className="pricing-monthly">€129<span>/mo</span></div>
+          <p>Monitoring, campaign tuning, segmentation updates and operational support.</p>
+          <Link className="pricing-cta" href="/request-setup?product=repeat-guest-engine">Request this setup</Link>
+        </aside>
+      </section>
+
+      <section className="products-section" id="systems">
+        <div className="section-heading"><span className="eyebrow">GuestFlow systems</span><h2>Four systems. Four clear operating outcomes.</h2><p>Start with one bottleneck. Expand only when the first system is working.</p></div>
         <div className="product-grid">{products.map((product) => <ProductCard key={product.id} product={product} />)}</div>
       </section>
 
-      <section className="how-it-works" id="how-it-works">
-        <div className="section-heading"><span className="eyebrow">Simple delivery</span><h2>Review. Configure. Launch.</h2><p>You do not need to choose infrastructure or stitch together tools before contacting us.</p></div>
-        <div className="steps">
-          <div><b>01</b><h3>Review</h3><p>Send the property basics, current stack and the operating problem you want to solve.</p></div>
-          <div><b>02</b><h3>Configure</h3><p>We define the launch scope, map your data and channels, then configure the system around the property.</p></div>
-          <div><b>03</b><h3>Handover</h3><p>You receive a working setup, documented ownership and an optional managed-support path.</p></div>
+      <section className="before-after-section">
+        <div className="section-heading compact-heading"><span className="eyebrow">What changes</span><h2>From scattered tools to an operating system.</h2></div>
+        <div className="before-after-grid">
+          <div className="before-card"><span>BEFORE</span><ul><li>Guest data exported and forgotten</li><li>Messages split across multiple inboxes</li><li>Low-season campaigns built manually</li><li>Repeat business left to chance</li></ul></div>
+          <div className="after-card"><span>AFTER</span><ul><li>Useful guest segments ready to activate</li><li>Clear workflows and ownership</li><li>Repeatable automations</li><li>A system the team can actually operate</li></ul></div>
         </div>
       </section>
 
-      <section className="decision-section">
-        <div>
-          <span className="eyebrow">Not sure which system?</span>
-          <h2>Start with the operating problem.</h2>
+      <section className="how-it-works" id="process">
+        <div className="section-heading"><span className="eyebrow">Delivery process</span><h2>Review. Configure. Launch.</h2><p>We keep the first implementation deliberately simple so the property understands exactly what it is buying.</p></div>
+        <div className="steps">
+          <div><b>01</b><h3>Setup review</h3><p>Property basics, current stack, database/channel situation and the operating problem.</p></div>
+          <div><b>02</b><h3>Implementation</h3><p>We map the data or channels, configure the workflow and test the agreed launch scope.</p></div>
+          <div><b>03</b><h3>Handover</h3><p>The team receives the working system, ownership notes and the optional managed-support path.</p></div>
         </div>
-        <div className="decision-grid">
-          <div><strong>Messages are scattered</strong><p>Start with Guest Inbox Pro.</p></div>
-          <div><strong>Guests keep asking the same questions</strong><p>Start with Digital Guest Concierge.</p></div>
-          <div><strong>You have past guests but no retention system</strong><p>Start with Repeat Guest Engine.</p></div>
-          <div><strong>You rely too heavily on OTA bookings</strong><p>Start with Direct Booking Engine.</p></div>
+      </section>
+
+      <section className="faq-section" id="faq">
+        <div className="section-heading compact-heading"><span className="eyebrow">FAQ</span><h2>Before you request a setup.</h2></div>
+        <div className="faq-grid">
+          <details><summary>Do I need to replace my PMS?</summary><p>No. The first review checks what you already use and whether the selected GuestFlow system can sit alongside it.</p></details>
+          <details><summary>Do you need my guest database immediately?</summary><p>No. For Repeat Guest Engine, the first conversation only needs the source, approximate size and structure. Guest-level data comes later, after scope and data responsibilities are clear.</p></details>
+          <details><summary>Is the monthly fee mandatory?</summary><p>No. The launch package is separate. Managed support is optional unless a specific implementation requires ongoing infrastructure or third-party services.</p></details>
+          <details><summary>Can I start with one system?</summary><p>Yes. That is the preferred approach. Solve one operating problem first, then expand if the result justifies it.</p></details>
         </div>
-        <Link className="primary" href="/request-setup">Tell us what you want to improve</Link>
+      </section>
+
+      <section className="final-cta">
+        <span className="eyebrow light-eyebrow">GuestFlow Systems</span>
+        <h2>Tell us the bottleneck. We’ll tell you what to install.</h2>
+        <p>No passwords, payment details or guest-level data are needed for the first review.</p>
+        <Link className="primary light-primary primary-large" href="/request-setup">Request a setup review</Link>
       </section>
     </main>
   );
