@@ -86,7 +86,8 @@ export default function Home() {
           <div className="pricing-label">Optional managed service</div>
           <div className="pricing-monthly">€129<span>/mo</span></div>
           <p>Monitoring, campaign tuning, segmentation updates and operational support.</p>
-          <Link className="pricing-cta" href="/request-setup?product=repeat-guest-engine">Request this setup</Link>
+          <Link className="pricing-cta" href="/buy/repeat-guest-engine">Buy launch setup — €990</Link>
+          <Link className="pricing-secondary" href="/request-setup?product=repeat-guest-engine">Prefer a review first?</Link>
         </aside>
       </section>
 
