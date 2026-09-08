@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "../repeat-guest-engine/repeat-guest.module.css";
+
+export const metadata: Metadata = {
+  title: "Digital Guest Concierge | GuestFlow Systems",
+  description: "A configured mobile-first guest portal for property information, services, useful links and upsell opportunities without requiring an app.",
+  alternates: { canonical: "/digital-guest-concierge" },
+};
 
 export default function DigitalGuestConciergePage() {
   return (
@@ -9,7 +16,7 @@ export default function DigitalGuestConciergePage() {
           <span className={styles.eyebrow}>Mobile guest experience</span>
           <h1>Put the stay information guests need in one branded place.</h1>
           <p className={styles.lead}>Digital Guest Concierge is a mobile-first guest portal reached by QR code. It organises property information, services, useful links and upsell opportunities without forcing guests to install an app.</p>
-          <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=digital-guest-concierge">Request setup</Link><Link className={styles.secondary} href="/#products">Compare systems</Link></div>
+          <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=digital-guest-concierge">Request setup</Link><Link className={styles.secondary} href="/digital-guest-concierge/demo">Open visual demo</Link><Link className={styles.secondary} href="/#systems">Compare systems</Link></div>
         </div>
         <aside className={styles.priceCard}>
           <span>Launch package</span><strong>€490</strong><p>One property · branded portal · core guest information · service links · QR access · handover</p>
@@ -44,7 +51,7 @@ export default function DigitalGuestConciergePage() {
           <div><b>WE</b><h3>Portal setup</h3><p>We configure the hosted/self-hosted foundation, guest pages and reusable QR access points.</p></div>
           <div><b>YOU</b><h3>Final approval</h3><p>The property confirms service details, policies, translations and operational contact information before launch.</p></div>
         </div>
-        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=digital-guest-concierge">Request the setup review</Link></div>
+        <div className={styles.actions}><Link className={styles.primary} href="/request-setup?product=digital-guest-concierge">Request the setup review</Link><Link className={styles.secondary} href="/digital-guest-concierge/demo">See what the guest experience can look like</Link></div>
       </section>
     </main>
   );
