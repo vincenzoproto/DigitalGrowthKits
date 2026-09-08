@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 import "./conversion.css";
+import "./language.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflowsystems.com";
 
