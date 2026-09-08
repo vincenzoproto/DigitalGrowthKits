@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "../repeat-guest.module.css";
+import DemoCsvAnalyzer from "./DemoCsvAnalyzer";
 
 const segments = [
   {name:"Marketing eligible", count:1248, note:"Confirmed eligible for promotional campaigns"},
@@ -23,6 +24,8 @@ export default function RepeatGuestDemo() {
       <section className={styles.section}>
         <Link href="/repeat-guest-engine" className={styles.secondary}>← Repeat Guest Engine</Link>
         <div style={{marginTop:32}}><span className={styles.eyebrow}>Interactive sales walkthrough · synthetic data</span><h2 style={{maxWidth:900}}>From a guest export to a controlled repeat-booking workflow.</h2><p className={styles.leadSmall}>Everything on this page is fictional demo data. It illustrates the implementation process and does not represent a real hotel or guaranteed commercial results.</p></div>
+
+        <DemoCsvAnalyzer />
 
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:14,margin:"34px 0"}}>
           {[['1,411','Synthetic imported contacts'],['1,248','Demo marketing eligible'],['3','Configured workflow examples'],['0','Real bookings claimed']].map(([value,label])=><div key={label} style={{background:'#172019',color:'white',padding:22,borderRadius:16}}><strong style={{fontSize:34}}>{value}</strong><div style={{color:'#b9c7b9',fontSize:13,marginTop:5}}>{label}</div></div>)}
