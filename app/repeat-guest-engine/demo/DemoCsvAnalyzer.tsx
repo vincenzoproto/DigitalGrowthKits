@@ -138,6 +138,33 @@ export default function DemoCsvAnalyzer() {
     ["Rows needing review", summary.invalid],
   ];
 
+  const campaigns = [
+    {
+      name: "Post-stay relationship",
+      audience: summary.recent,
+      trigger: "Recent eligible guests · 0–90 days",
+      purpose: "Bring recent guests back into a direct relationship while the stay is still fresh.",
+      subject: "Thanks for staying with us — one thing before your next visit",
+      body: "Hi {{first_name}}, thank you for staying with us. If you plan to return, booking directly gives you the clearest route to our current offers and availability. {{direct_booking_link}}",
+    },
+    {
+      name: "180-day win-back",
+      audience: summary.dormant,
+      trigger: "Eligible guests · last stay 180+ days ago",
+      purpose: "Re-engage past guests with a property-approved reason to return.",
+      subject: "It may be time to come back",
+      body: "Hi {{first_name}}, it has been a while since your last stay. We would be glad to welcome you back. Here is the direct booking page for current dates and any approved returning-guest offer: {{direct_booking_link}}",
+    },
+    {
+      name: "Low-season fill",
+      audience: summary.lowSeason,
+      trigger: "Eligible guests with previous low-season stays",
+      purpose: "Target guests already familiar with quieter travel periods instead of broadcasting to the whole database.",
+      subject: "A quieter stay, directly with us",
+      body: "Hi {{first_name}}, you previously stayed with us outside peak season. We are opening selected quieter dates and wanted to share the direct booking route with you first: {{direct_booking_link}}",
+    },
+  ];
+
   return (
     <section style={{ marginTop: 18, background: "#fffef9", border: "1px solid #dcd9cf", borderRadius: 18, padding: 24 }}>
       <span style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase" }}>Live local test · no upload</span>
@@ -164,8 +191,40 @@ export default function DemoCsvAnalyzer() {
             ))}
           </div>
 
+          <div style={{ marginTop: 28 }}>
+            <span style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase" }}>Campaign simulator · preview only</span>
+            <h3 style={{ fontSize: 28, margin: "8px 0 6px" }}>This is what the hotel would approve before launch.</h3>
+            <p style={{ color: "#62685f", maxWidth: 850, marginTop: 0 }}>
+              Audience counts are calculated from the CSV you selected. The examples below are draft structures only: no campaign is created or sent from this demo.
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 14, marginTop: 18 }}>
+              {campaigns.map((campaign) => (
+                <article key={campaign.name} style={{ border: "1px solid #dcd9cf", borderRadius: 16, padding: 18, background: "white" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                    <strong style={{ fontSize: 18 }}>{campaign.name}</strong>
+                    <span style={{ borderRadius: 999, padding: "5px 9px", fontSize: 11, background: campaign.audience > 0 ? "#eff3e4" : "#f1efea" }}>
+                      {campaign.audience > 0 ? "Ready to review" : "No matching audience"}
+                    </span>
+                  </div>
+                  <div style={{ marginTop: 14, padding: 14, borderRadius: 12, background: "#172019", color: "white" }}>
+                    <strong style={{ fontSize: 30 }}>{campaign.audience}</strong>
+                    <div style={{ color: "#c5cec5", fontSize: 12, marginTop: 3 }}>contacts in this preview audience</div>
+                  </div>
+                  <p style={{ fontSize: 13, color: "#62685f" }}><strong>Rule:</strong> {campaign.trigger}</p>
+                  <p style={{ fontSize: 13, color: "#62685f" }}>{campaign.purpose}</p>
+                  <div style={{ marginTop: 16, borderTop: "1px solid #ece8df", paddingTop: 14 }}>
+                    <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: ".08em", color: "#7a8078" }}>Example message</div>
+                    <div style={{ fontWeight: 700, marginTop: 7, fontSize: 14 }}>{campaign.subject}</div>
+                    <p style={{ fontSize: 13, lineHeight: 1.55, color: "#51584f", marginBottom: 0 }}>{campaign.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
           <div style={{ marginTop: 20, padding: 16, borderRadius: 12, background: "#f2efe5", color: "#51584f", fontSize: 13 }}>
-            Safety rule in this demo: only rows marked marketing_eligible=true and unsubscribed=false can enter promotional segments. Final production rules still require property approval and legal review of the source data.
+            Safety rule in this demo: only rows marked marketing_eligible=true and unsubscribed=false can enter promotional segments. Final production rules, offers, timing, language and lawful basis still require property approval before any live send.
           </div>
         </>
       ) : null}
