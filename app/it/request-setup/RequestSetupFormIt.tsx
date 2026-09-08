@@ -28,13 +28,11 @@ export default function RequestSetupFormIt(){
        setStatus("Richiesta ricevuta. Valuteremo struttura, strumenti attuali e obiettivo prima di definire il servizio.");
      }else{
        setStatusType("fallback");
-       setStatus("La richiesta non è stata inviata. Apro una mail già compilata: premi Invia nella tua app email per completarla.");
-       setTimeout(()=>fallback(deliveredReferral),350);
+       setStatus("La richiesta non è stata inviata. Puoi aprire l’email precompilata qui sotto e premere Invia nella tua app email per completarla.");
      }
    }catch{
      setStatusType("fallback");
-     setStatus("Non abbiamo potuto confermare l’invio. Apro una mail già compilata: premi Invia nella tua app email per completare la richiesta.");
-     setTimeout(()=>fallback(),350);
+     setStatus("Non abbiamo potuto confermare l’invio. Puoi aprire l’email precompilata qui sotto e premere Invia nella tua app email per completare la richiesta.");
    }finally{setSending(false);}
  }
  return <form onSubmit={submit} className="setup-form">
@@ -47,7 +45,7 @@ export default function RequestSetupFormIt(){
    {referral&&<p className="form-note">Referral partner: <strong>{referral}</strong></p>}
    <label className="form-consent"><input required type="checkbox"/><span>Accetto di essere contattato in merito a questa richiesta di setup.</span></label>
    {status&&<div className={`setup-status ${statusType}`} role="status">{status}</div>}
-   <div className="setup-actions"><button type="submit" className="buy-button" disabled={sending}>{sending?"Invio…":"Invia richiesta setup →"}</button></div>
+   <div className="setup-actions"><button type="submit" className="buy-button" disabled={sending}>{sending?"Invio…":"Invia richiesta setup →"}</button>{status&&statusType==="fallback"&&<button type="button" onClick={()=>fallback()} className="buy-button secondary-button">Apri email precompilata</button>}</div>
    <p className="form-note">Non chiediamo password, dati di pagamento o dati personali degli ospiti in questa fase.</p>
  </form>;
 }
