@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import "./premium.css";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflow-systems-vincenzo22.vercel.app";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "GuestFlow Systems | Hospitality growth systems, configured for you",
   description: "Done-for-you guest messaging, retention, digital concierge and direct-booking systems for independent hotels and B&Bs.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "GuestFlow Systems",
+    description: "Configured hospitality growth systems for independent hotels and B&Bs.",
+    url: siteUrl,
+    siteName: "GuestFlow Systems",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -33,6 +45,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Link href="/repeat-guest-engine">Repeat Guest Engine</Link>
             <Link href="/guest-inbox-pro">Guest Inbox Pro</Link>
             <Link href="/request-setup">Request setup</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
             <a href="mailto:info@vincenzoproto.com">info@vincenzoproto.com</a>
           </div>
           <div className="footer-meta"><span>© 2026 GuestFlow Systems</span><span>Open-source foundations are credited according to their applicable licenses.</span></div>
