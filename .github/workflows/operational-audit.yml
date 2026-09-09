@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/operational-audit.yml'
       - 'scripts/operational-*.mjs'
+      - 'tests/setup-request.test.mjs'
       - 'app/api/setup-request/route.ts'
   workflow_dispatch:
     inputs:
@@ -20,7 +21,7 @@ permissions:
 jobs:
   build-and-local-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,6 +31,22 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run test:smoke
+      - name: Install isolated browser QA tooling
+        run: |
+          npm install --global agent-browser
+          agent-browser --version
+          agent-browser install --with-deps
+      - name: Check candidate in desktop and mobile browser; no real providers
+        run: node scripts/operational-browser-audit.mjs
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guestflow-browser-audit
+          path: |
+            reports/guestflow-browser-audit.md
+            reports/guestflow-*.png
+          retention-days: 14
 
   published-site-audit:
     if: github.repository == 'vincenzoproto/DigitalGrowthKits' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository)
