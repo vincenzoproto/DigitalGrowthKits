@@ -1,0 +1,53 @@
+name: GuestFlow operational audit
+
+on:
+  pull_request:
+    branches: [feat/guestflow-seo-and-guided-demo]
+    paths:
+      - '.github/workflows/operational-audit.yml'
+      - 'scripts/operational-*.mjs'
+      - 'app/api/setup-request/route.ts'
+  workflow_dispatch:
+    inputs:
+      send_test_lead:
+        description: 'Send ONE clearly marked synthetic request to the public site (no payment)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-local-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run test:smoke
+
+  published-site-audit:
+    if: github.repository == 'vincenzoproto/DigitalGrowthKits' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit published paths; never charge or follow Stripe redirects
+        env:
+          GF_AUDIT_SEND_TEST_LEAD: ${{ (github.event_name == 'workflow_dispatch' && inputs.send_test_lead) || (github.event_name == 'pull_request' && github.event.action == 'opened' && github.run_attempt == 1 && github.head_ref == 'chore/guestflow-operational-audit-20260909') }}
+        run: node scripts/operational-live-audit.mjs
+      - name: Preserve audit evidence even when readiness is blocked
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guestflow-operational-audit
+          path: reports/guestflow-operational-audit.*
+          retention-days: 14
