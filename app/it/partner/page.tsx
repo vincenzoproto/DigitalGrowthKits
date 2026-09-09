@@ -15,9 +15,9 @@ const faqs = [
 export default function GuestFlowPartnerPage() {
   return <main>
     <section className="hero hero-premium">
-      <div className="hero-copy">
+      <div className="hero-copy" style={{ minWidth: 0 }}>
         <span className="eyebrow">GuestFlow Partner Program · Pilot</span>
-        <h1>Porta un hotel qualificato. Guadagna sulla prima implementazione.</h1>
+        <h1 style={{ overflowWrap: "anywhere", hyphens: "auto" }}>Porta un hotel qualificato. Guadagna sulla prima implementazione.</h1>
         <p className="hero-lead">Un programma referral semplice per revenue manager, consulenti hospitality, web agency, commerciali e professionisti che lavorano già con strutture ricettive indipendenti.</p>
         <div className="hero-actions">
           <a className="primary primary-large" href="mailto:info@vincenzoproto.com?subject=GuestFlow%20Partner%20-%20Candidatura&body=Nome%3A%0AAzienda%2Fruolo%3A%0AQuante%20strutture%20segui%3A%0A%0AVorrei%20valutare%20il%20programma%20partner%20GuestFlow.">Candidati come partner</a>

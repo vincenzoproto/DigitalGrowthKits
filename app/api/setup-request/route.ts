@@ -5,6 +5,7 @@ export const runtime = "nodejs";
 
 type SetupRequest = {
   product?: string;
+  goal?: string;
   referral?: string;
   propertyName?: string;
   propertyType?: string;
@@ -25,6 +26,7 @@ function clean(value: unknown, max = 500) {
 function formatText(data: Required<Omit<SetupRequest, "companyWebsite">>) {
   return [
     `System: ${data.product}`,
+    `Primary goal: ${data.goal || "-"}`,
     `Referral: ${data.referral || "direct"}`,
     `Property: ${data.propertyName}`,
     `Property type: ${data.propertyType}`,
@@ -47,6 +49,7 @@ export async function POST(request: NextRequest) {
 
     const data = {
       product: clean(raw.product, 120),
+      goal: clean(raw.goal),
       referral: resolveReferral(raw.referral, request.cookies.get(REFERRAL_COOKIE)?.value) || "",
       propertyName: clean(raw.propertyName, 180),
       propertyType: clean(raw.propertyType, 80),
