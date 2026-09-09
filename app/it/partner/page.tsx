@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Diventa Partner | GuestFlow Systems",
-  description: "Referral partnership GuestFlow per consulenti, revenue manager e agenzie hospitality. 20% sulla prima implementazione incassata.",
-  alternates: { canonical: "/it/partner" },
-};
+export const metadata = createPageMetadata({"path": "/it/partner", "title": "Partner per hotel e B&B: programma referral | GuestFlow", "description": "Il programma referral GuestFlow per consulenti, revenue manager e agenzie hospitality: introduci strutture qualificate e scopri condizioni e implementazione."});
 
 const faqs = [
   ["Quanto guadagno?", "Il partner riceve il 20% sulla prima implementazione GuestFlow effettivamente incassata dal cliente presentato. Con il Founder setup da €690 sono €138; con il prezzo standard da €990 sono €198."],

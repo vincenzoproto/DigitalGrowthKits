@@ -1,13 +1,9 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Suspense } from "react";
-import AuditCalculator from "../../audit/AuditCalculator";
+import AuditCalculator from "@/components/AuditCalculator";
 
-export const metadata: Metadata = {
-  title: "Repeat Revenue Audit | GuestFlow Systems",
-  description: "Audit gratuito di 2 minuti per capire se il tuo hotel o B&B è pronto a riattivare lo storico ospiti e costruire un flusso di repeat booking.",
-  alternates: { canonical: "/it/audit", languages: { en: "/audit", it: "/it/audit" } },
-};
+export const metadata = createPageMetadata({"path": "/it/audit", "title": "Audit gratuito: riattivare gli ospiti dell’hotel | GuestFlow", "description": "Valuta in due minuti se il tuo hotel o B&B è pronto a riattivare gli ospiti passati: storico contatti, campagne e percorso di prenotazione diretta."});
 
 export default function ItalianAuditPage(){
   return <main className="audit-page">
