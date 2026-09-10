@@ -1,13 +1,12 @@
 import type { MetadataRoute } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://guestflowsystems.com";
-
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: canonicalUrl("/sitemap.xml"),
   };
 }
