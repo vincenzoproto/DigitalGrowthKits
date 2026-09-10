@@ -1,0 +1,35 @@
+name: Export GuestFlow source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/export-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package runtime source
+        uses: actions/upload-artifact@v4
+        with:
+          name: guestflow-runtime-source
+          if-no-files-found: error
+          retention-days: 1
+          path: |
+            app
+            components
+            configs
+            lib
+            public
+            middleware.ts
+            next.config.ts
+            package.json
+            package-lock.json
+            tsconfig.json
+            vercel.json
