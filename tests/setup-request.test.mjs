@@ -32,7 +32,7 @@ function harness(environment = {}, outcomes = []) {
     'next/server': { NextResponse: { json: (data, init = {}) => Response.json(data, init) } },
     '@/lib/referrals': referrals,
   }, environment, async (url, init) => {
-    calls.push({ url, data: JSON.parse(init.body) });
+    calls.push({ url, headers: init.headers, data: JSON.parse(init.body) });
     const result = outcomes[calls.length - 1] ?? 200;
     if (result instanceof Error) throw result;
     return { ok: result >= 200 && result < 300 };
@@ -52,16 +52,31 @@ test('primary goal and referral survive webhook delivery', async () => {
   assert.equal(h.calls[0].data.goal, lead.goal);
   assert.match(h.calls[0].data.text, /Primary goal: Generate more repeat bookings/);
   assert.equal(h.calls[0].data.referral, 'qa_partner');
+  assert.equal(h.calls[0].headers.Authorization, undefined);
+});
+
+test('configured webhook bearer is sent only to the webhook provider', async () => {
+  const h = harness({
+    SETUP_REQUEST_WEBHOOK_URL: 'https://mock.invalid/lead',
+    SETUP_REQUEST_WEBHOOK_BEARER: 'mock-webhook-token',
+  });
+  const response = await h.submit();
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).channel, 'webhook');
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.calls[0].headers.Authorization, 'Bearer mock-webhook-token');
+  assert.equal(h.calls[0].data.goal, lead.goal);
 });
 
 test('primary goal survives webhook timeout and email fallback', async () => {
-  const h = harness({ SETUP_REQUEST_WEBHOOK_URL: 'https://mock.invalid/lead', RESEND_API_KEY: 'mock-only', RESEND_FROM: 'qa@example.invalid' }, [new Error('simulated timeout'), 200]);
+  const h = harness({ SETUP_REQUEST_WEBHOOK_URL: 'https://mock.invalid/lead', SETUP_REQUEST_WEBHOOK_BEARER: 'mock-webhook-token', RESEND_API_KEY: 'mock-only', RESEND_FROM: 'qa@example.invalid' }, [new Error('simulated timeout'), 200]);
   const response = await h.submit();
   assert.equal(response.status, 200);
   assert.equal((await response.json()).channel, 'email');
   assert.equal(h.calls.length, 2);
   assert.match(h.calls[1].data.text, /Primary goal: Generate more repeat bookings/);
   assert.equal(h.calls[1].data.reply_to, lead.email);
+  assert.equal(h.calls[1].headers.Authorization, 'Bearer mock-only');
 });
 
 test('missing delivery configuration is an explicit 503, not a saved CRM lead', async () => {
