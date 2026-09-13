@@ -6,6 +6,7 @@ export const SITE_URL = "https://www.guestflowsystems.com";
 export const TRANSLATED_ROUTES = [
   { en: "/", it: "/it" },
   { en: "/audit", it: "/it/audit" },
+  { en: "/weak-date-planner", it: "/it/weak-date-planner" },
   { en: "/guest-inbox-pro", it: "/it/guest-inbox-pro" },
   { en: "/digital-guest-concierge", it: "/it/digital-guest-concierge" },
   { en: "/repeat-guest-engine", it: "/it/repeat-guest-engine" },
