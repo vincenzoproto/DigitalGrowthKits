@@ -1,0 +1,100 @@
+name: Deploy GuestFlow production
+
+on:
+  workflow_run:
+    workflows: ["Build check"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guestflow-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      ${{
+        github.event_name == 'workflow_dispatch' ||
+        (github.event.workflow_run.conclusion == 'success' &&
+         github.event.workflow_run.head_branch == 'main')
+      }}
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_ZQSzglfStcNMy0BflbpvVx48
+      VERCEL_PROJECT_ID: prj_vLxtiqkCqg6zhZg4egQklv0FXn0n
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout validated commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'main' }}
+
+      - name: Check Vercel credential
+        id: credential
+        shell: bash
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::VERCEL_TOKEN is not configured. Add it as a repository secret to enable automatic GuestFlow production deployments."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain inactive deployment
+        if: steps.credential.outputs.configured != 'true'
+        run: |
+          echo "### GuestFlow auto-deploy is installed but inactive" >> "$GITHUB_STEP_SUMMARY"
+          echo "Add the repository secret **VERCEL_TOKEN** and the next successful Build check on main will deploy automatically." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Setup Node
+        if: steps.credential.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.credential.outputs.configured == 'true'
+        run: npm ci
+
+      - name: Install pinned Vercel CLI
+        if: steps.credential.outputs.configured == 'true'
+        run: npm install --global vercel@59.11.7
+
+      - name: Pull production configuration
+        if: steps.credential.outputs.configured == 'true'
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build production artifact
+        if: steps.credential.outputs.configured == 'true'
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy validated artifact
+        if: steps.credential.outputs.configured == 'true'
+        id: deploy
+        shell: bash
+        run: |
+          DEPLOYMENT_URL="$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
+          echo "url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+          echo "### GuestFlow production deployment" >> "$GITHUB_STEP_SUMMARY"
+          echo "$DEPLOYMENT_URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify public GuestFlow routes
+        if: steps.credential.outputs.configured == 'true'
+        shell: bash
+        run: |
+          for attempt in {1..12}; do
+            HOME="$(curl --fail --silent --show-error --location https://www.guestflowsystems.com/ || true)"
+            PLANNER="$(curl --fail --silent --show-error --location https://www.guestflowsystems.com/it/weak-date-planner || true)"
+            if printf '%s' "$HOME" | grep -q "GuestFlow Systems" && printf '%s' "$PLANNER" | grep -q "Planner date deboli"; then
+              echo "Production smoke test passed."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Production aliases did not serve the expected GuestFlow pages after deployment." >&2
+          exit 1
