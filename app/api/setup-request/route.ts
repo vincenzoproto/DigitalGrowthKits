@@ -71,7 +71,10 @@ export async function POST(request: NextRequest) {
 
     if (webhook) {
       try {
-        const webhookResponse = await fetch(webhook, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }), cache: "no-store", signal: AbortSignal.timeout(10000) });
+        const webhookBearer = process.env.SETUP_REQUEST_WEBHOOK_BEARER?.trim();
+        const webhookHeaders: Record<string, string> = { "content-type": "application/json" };
+        if (webhookBearer) webhookHeaders.Authorization = `Bearer ${webhookBearer}`;
+        const webhookResponse = await fetch(webhook, { method: "POST", headers: webhookHeaders, body: JSON.stringify({ subject, text, ...data, source: "guestflowsystems.com" }), cache: "no-store", signal: AbortSignal.timeout(10000) });
         if (webhookResponse.ok) return NextResponse.json({ ok: true, channel: "webhook", referral: data.referral });
       } catch {
         // A provider timeout must still allow the configured email fallback.
